@@ -5,7 +5,6 @@ import 'package:area_51/presentation/pages/productPage.dart';
 import 'package:area_51/presentation/pages/catalog.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../business_logic/cubits/cartCubit/cart_cubit.dart';
 import '../screens/cart.dart';
 
 class AppRouter {

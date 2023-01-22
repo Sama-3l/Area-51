@@ -1,6 +1,10 @@
+
 import 'package:area_51/constants/colors.dart';
+import 'package:area_51/presentation/pages/productPage.dart';
+import 'package:area_51/presentation/screens/cart.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:area_51/data/models/product.dart';
@@ -30,7 +34,6 @@ class ProductItem extends StatelessWidget {
         ? Padding(
             padding: const EdgeInsets.only(left: 20),
             child: ProductListing(
-                onTap: () {},
                 theme: theme,
                 radius: radius,
                 dimensions: dimensions,
@@ -38,7 +41,6 @@ class ProductItem extends StatelessWidget {
                 price: price),
           )
         : ProductListing(
-            onTap: () {},
             theme: theme,
             radius: radius,
             dimensions: dimensions,
@@ -55,7 +57,6 @@ class ProductListing extends StatelessWidget {
     required this.dimensions,
     required this.productTitle,
     required this.price,
-    required this.onTap,
   }) : super(key: key);
 
   final LightMode theme;
@@ -63,12 +64,12 @@ class ProductListing extends StatelessWidget {
   final double dimensions;
   final String productTitle;
   final double price;
-  final GestureTapCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: () {
+      },
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Expanded(
           child: Padding(
