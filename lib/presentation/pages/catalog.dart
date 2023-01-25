@@ -1,17 +1,21 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:area_51/business_logic/blocs/bloc/cart_bloc.dart';
 import 'package:area_51/business_logic/cubits/themeCubit/theme_cubit.dart';
 import 'package:area_51/data/models/product.dart';
+import 'package:area_51/data/repositories/cart_Products.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:area_51/constants/colors.dart';
 import '../widgets/products/homePageProductItem.dart';
 
 class Catalog extends StatefulWidget {
-  Catalog({super.key, required this.theme});
+  Catalog({super.key, required this.theme, required this.cart});
 
   LightMode theme;
+  CartProducts cart;
 
   @override
   State<Catalog> createState() => _CatalogState();
@@ -22,6 +26,13 @@ class _CatalogState extends State<Catalog> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: widget.theme.mainAccent,
+        floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              DefaultTabController.of(context)!.animateTo(2);
+              BlocProvider.of<CartBloc>(context)
+                  .add(ProductAddedEvent(cart: widget.cart));
+            },
+            child: Text('hello')),
         body: CustomScrollView(
           slivers: [
             SliverToBoxAdapter(
@@ -46,37 +57,47 @@ class _CatalogState extends State<Catalog> {
                             color: widget.theme.oppAccent,
                             fontWeight: FontWeight.bold,
                             fontSize: 24)))),
-            SliverPadding(
-                padding: const EdgeInsets.only(left: 20),
-                sliver: SliverGrid(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2, childAspectRatio: 0.65),
-                    delegate: SliverChildBuilderDelegate(((context, index) {
-                      return index % 2 == 0
-                          ? Padding(
-                              padding:
-                                  const EdgeInsets.only(bottom: 30, right: 2),
-                              child: ProductItem(
+            BlocBuilder<CartBloc, CartState>(
+              builder: (context, state) {
+                final cart = state.cart;
+                if (state is AddedToCartState) {
+                  cart.cartProducts.add(Product(price: 999.9, name: "Hell"));
+                } else if (state is RemovedFromCartState) {
+                  cart.cartProducts.remove(Product(price: 999.9, name: "Hell"));
+                }
+                return SliverPadding(
+                  padding: const EdgeInsets.only(left: 20),
+                  sliver: SliverGrid(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2, childAspectRatio: 0.65),
+                      delegate: SliverChildBuilderDelegate(((context, index) {
+                        return index % 2 == 0
+                            ? Padding(
+                                padding:
+                                    const EdgeInsets.only(bottom: 30, right: 2),
+                                child: ProductItem(
                                   index: index,
                                   theme: widget.theme,
                                   dimensions: 190,
                                   radius: 10,
-                                  productTitle: "ACER PREDATOR TRITON 300",
+                                  product: widget.cart.cartProducts[index],
                                   homeScreen: false,
-                                  price: 789.99))
-                          : Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 2, bottom: 30),
-                              child: ProductItem(
+                                ))
+                            : Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 2, bottom: 30),
+                                child: ProductItem(
                                   index: index,
                                   theme: widget.theme,
                                   dimensions: 190,
                                   radius: 10,
                                   homeScreen: false,
-                                  productTitle: "ACER PREDATOR TRITON 300",
-                                  price: 789.99));
-                    }), childCount: 10)),
-              ),
+                                  product: widget.cart.cartProducts[index],
+                                ));
+                      }), childCount: widget.cart.cartProducts.length)),
+                );
+              },
+            ),
           ],
         ));
   }

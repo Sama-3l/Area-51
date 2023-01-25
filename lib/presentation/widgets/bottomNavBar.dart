@@ -2,6 +2,7 @@
 
 import 'dart:math';
 
+import 'package:area_51/data/repositories/cart_Products.dart';
 import 'package:carbon_icons/carbon_icons.dart';
 import 'package:flutter/material.dart';
 import '../../business_logic/cubits/themeCubit/theme_cubit.dart';
@@ -50,10 +51,15 @@ class _BottomNavBarState extends State<BottomNavBar> {
 }
 
 class BottomNavBarTabs extends StatefulWidget {
-  BottomNavBarTabs({super.key, required this.state, required this.theme});
+  BottomNavBarTabs(
+      {super.key,
+      required this.state,
+      required this.theme,
+      required this.cart});
 
   ThemeState state;
   LightMode theme;
+  CartProducts cart;
 
   @override
   State<BottomNavBarTabs> createState() => _BottomNavBarTabsState();
@@ -64,8 +70,8 @@ class _BottomNavBarTabsState extends State<BottomNavBarTabs> {
   Widget build(BuildContext context) {
     return TabBarView(children: [
       Home(theme: widget.theme),
-      Catalog(theme: widget.theme),
-      Cart(theme: widget.theme),
+      Catalog(theme: widget.theme, cart: widget.cart),
+      Cart(theme: widget.theme, cart: widget.cart),
       Account(state: widget.state, theme: widget.theme)
     ]);
   }

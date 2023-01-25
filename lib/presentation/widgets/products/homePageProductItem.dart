@@ -14,16 +14,14 @@ class ProductItem extends StatelessWidget {
       {super.key,
       required this.theme,
       required this.index,
-      required this.productTitle,
-      required this.price,
+      required this.product,
       required this.homeScreen,
       required this.dimensions,
       required this.radius});
 
   LightMode theme;
   int index;
-  String productTitle;
-  double price;
+  Product product;
   bool homeScreen;
   double dimensions;
   double radius;
@@ -37,15 +35,13 @@ class ProductItem extends StatelessWidget {
                 theme: theme,
                 radius: radius,
                 dimensions: dimensions,
-                productTitle: productTitle,
-                price: price),
+                product: product),
           )
         : ProductListing(
             theme: theme,
             radius: radius,
             dimensions: dimensions,
-            productTitle: productTitle,
-            price: price);
+            product: product);
   }
 }
 
@@ -55,15 +51,13 @@ class ProductListing extends StatelessWidget {
     required this.theme,
     required this.radius,
     required this.dimensions,
-    required this.productTitle,
-    required this.price,
+    required this.product
   }) : super(key: key);
 
   final LightMode theme;
   final double radius;
   final double dimensions;
-  final String productTitle;
-  final double price;
+  final Product product;
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +78,7 @@ class ProductListing extends StatelessWidget {
         ),
         SizedBox(
           width: dimensions,
-          child: AutoSizeText(productTitle,
+          child: AutoSizeText(product.name,
               maxFontSize: 15,
               minFontSize: 10,
               maxLines: 2,
@@ -93,7 +87,7 @@ class ProductListing extends StatelessWidget {
                   fontSize: 15,
                   fontWeight: FontWeight.bold)),
         ),
-        AutoSizeText("\$$price",
+        AutoSizeText("\$${product.price}",
             maxFontSize: 12,
             minFontSize: 9,
             maxLines: 1,

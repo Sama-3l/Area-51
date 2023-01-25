@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, must_be_immutable
+// ignore_for_file: prefer_const_constructors, must_be_immutable, curly_braces_in_flow_control_structures
 
 import 'package:area_51/presentation/widgets/products/homePageProductItem.dart';
 import 'package:flutter/material.dart';
@@ -20,13 +20,13 @@ class HomeScreenLists extends StatefulWidget {
 }
 
 class _HomeScreenListsState extends State<HomeScreenLists> {
-  late List<Product> productsList;
+  late List<Product> productsList = [];
 
   @override
   void initState() {
     super.initState();
-    ProductList products = ProductList();
-    productsList = products.initiate();
+    for(int i = 0; i < 10; i++)
+      productsList.add(Product(price: 222, name: "Hello"));
   }
 
   @override
@@ -52,8 +52,7 @@ class _HomeScreenListsState extends State<HomeScreenLists> {
                     dimensions: 180,
                     radius: 25,
                     index: index,
-                    productTitle: productsList[index].name,
-                    price: productsList[index].price);
+                    product: productsList[index],);
               }))),
     ]);
   }

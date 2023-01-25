@@ -6,9 +6,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Cart extends StatefulWidget {
-  Cart({super.key, required this.theme});
+  Cart({super.key, required this.theme, required this.cart});
 
   LightMode theme;
+  CartProducts cart;
 
   @override
   State<Cart> createState() => _CartState();
