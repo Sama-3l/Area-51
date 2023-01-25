@@ -2,7 +2,16 @@ import 'package:flutter/material.dart';
 import '../models/product.dart';
 
 class ProductList {
-  late List<Product> productList;
+  List<Product> productList = [
+    Product(name: "ACER PREDATOR TRITON 300", price: 799.99),
+    Product(name: "MACBOOK AIR 2022 M1", price: 1299.99),
+    Product(name: "DELL INSIPIRON 550", price: 599.99),
+    Product(name: "MACBOOK PRO 2022 M2 PRO", price: 1999.99),
+    Product(name: "HP PAVILION GAMING 600", price: 999.99),
+    Product(name: "ASUS ZEPHYRUS G500", price: 1399.99),
+    Product(name: "MICROSOFT SURFACE", price: 999.99),
+    Product(name: "LENOVO IDEAPAD 660", price: 499.99)
+  ];
 
   // List<Product> initiate() {
   //   productList = [];

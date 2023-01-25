@@ -10,23 +10,23 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:area_51/data/repositories/products_Repo.dart';
 
 class HomeScreenLists extends StatefulWidget {
-  HomeScreenLists({super.key, required this.title, required this.theme});
+  HomeScreenLists({super.key, required this.title, required this.theme, required this.products});
 
   String title;
   LightMode theme;
+  ProductList products;
 
   @override
   State<HomeScreenLists> createState() => _HomeScreenListsState();
 }
 
 class _HomeScreenListsState extends State<HomeScreenLists> {
-  late List<Product> productsList = [];
+  late List<Product> productsList;
 
   @override
   void initState() {
     super.initState();
-    for(int i = 0; i < 10; i++)
-      productsList.add(Product(price: 222, name: "Hello"));
+    productsList = widget.products.productList;
   }
 
   @override

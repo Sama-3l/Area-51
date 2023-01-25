@@ -3,6 +3,8 @@
 import 'dart:math';
 
 import 'package:area_51/data/repositories/cart_Products.dart';
+import 'package:area_51/data/repositories/products_Repo.dart';
+import 'package:area_51/presentation/pages/productPage.dart';
 import 'package:carbon_icons/carbon_icons.dart';
 import 'package:flutter/material.dart';
 import '../../business_logic/cubits/themeCubit/theme_cubit.dart';
@@ -28,9 +30,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
-      aspectRatio: 325 / 80,
+      aspectRatio: 350 / 80,
       child: Padding(
-          padding: EdgeInsets.only(bottom: 17, left: 7, right: 7, top: 7),
+          padding: EdgeInsets.only(bottom: 17, left: 7, right: 7),
           child: Container(
               decoration: BoxDecoration(
                   color: widget.theme.oppAccent,
@@ -66,11 +68,14 @@ class BottomNavBarTabs extends StatefulWidget {
 }
 
 class _BottomNavBarTabsState extends State<BottomNavBarTabs> {
+  final ProductList allProducts = ProductList();
+
   @override
   Widget build(BuildContext context) {
     return TabBarView(children: [
-      Home(theme: widget.theme),
-      Catalog(theme: widget.theme, cart: widget.cart),
+      Home(theme: widget.theme, products: allProducts),
+      ProductPage(theme: widget.theme, product: allProducts.productList[0]),
+      //Catalog(theme: widget.theme, cart: widget.cart, catalogProducts: allProducts),
       Cart(theme: widget.theme, cart: widget.cart),
       Account(state: widget.state, theme: widget.theme)
     ]);

@@ -7,11 +7,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../screens/cart.dart';
 
-class AppRouter {
+/*class AppRouter {
   Route? onGenerateRoute(RouteSettings routeSettings, LightMode theme, BuildContext context) {
     switch (routeSettings.name) {
       case '/':
-        return MaterialPageRoute(builder: ((context) => Home(theme: theme)));
+        return MaterialPageRoute(builder: ((context) => Home(theme: theme, products: ,)));
       case '/product':
         return MaterialPageRoute(
             builder: ((context) => ProductPage(theme: theme)));
@@ -22,4 +22,4 @@ class AppRouter {
         return null;
     }
   }
-}
+}*/

@@ -9,10 +9,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
+import '../../data/repositories/products_Repo.dart';
+
 class Home extends StatefulWidget {
-  Home({super.key, required this.theme});
+  Home({super.key, required this.theme, required this.products});
 
   LightMode theme;
+  ProductList products;
 
   @override
   State<Home> createState() => _HomeState();
@@ -42,6 +45,7 @@ class _HomeState extends State<Home> {
             child: HomeScreenLists(
               theme: widget.theme,
               title: "New Arrival",
+              products: widget.products,
             )),
       ),
       AspectRatio(
@@ -49,6 +53,7 @@ class _HomeState extends State<Home> {
         child: HomeScreenLists(
           theme: widget.theme,
           title: "Recommendation",
+          products: widget.products,
         ),
       ),
     ]);

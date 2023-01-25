@@ -1,4 +1,3 @@
-
 import 'package:area_51/constants/colors.dart';
 import 'package:area_51/presentation/pages/productPage.dart';
 import 'package:area_51/presentation/screens/cart.dart';
@@ -46,13 +45,13 @@ class ProductItem extends StatelessWidget {
 }
 
 class ProductListing extends StatelessWidget {
-  const ProductListing({
-    Key? key,
-    required this.theme,
-    required this.radius,
-    required this.dimensions,
-    required this.product
-  }) : super(key: key);
+  const ProductListing(
+      {Key? key,
+      required this.theme,
+      required this.radius,
+      required this.dimensions,
+      required this.product})
+      : super(key: key);
 
   final LightMode theme;
   final double radius;
@@ -63,6 +62,7 @@ class ProductListing extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        DefaultTabController.of(context)!.animateTo(2);
       },
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Expanded(
