@@ -74,8 +74,8 @@ class _BottomNavBarTabsState extends State<BottomNavBarTabs> {
   Widget build(BuildContext context) {
     return TabBarView(children: [
       Home(theme: widget.theme, products: allProducts),
-      ProductPage(theme: widget.theme, product: allProducts.productList[0]),
-      //Catalog(theme: widget.theme, cart: widget.cart, catalogProducts: allProducts),
+      // ProductPage(theme: widget.theme, product: allProducts.productList[0]),
+      Catalog(theme: widget.theme, cart: widget.cart, catalogProducts: allProducts),
       Cart(theme: widget.theme, cart: widget.cart),
       Account(state: widget.state, theme: widget.theme)
     ]);

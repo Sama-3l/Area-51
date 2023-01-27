@@ -6,7 +6,7 @@ class Product {
   final String name;
   final double price;
   // final String category;
-  // final String description;
+  final String description;
   // // final Image thumbnail;
   // // final List<Image> products;
   // final String productId;
@@ -22,7 +22,7 @@ class Product {
   Product(
       {required this.price,
       // required this.category,
-      // required this.description,
+      required this.description,
       // // required this.thumbnail,
       // // required this.products,
       // required this.productId,

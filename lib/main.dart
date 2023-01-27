@@ -1,8 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:area_51/business_logic/blocs/cartbloc/cart_bloc.dart';
+import 'package:area_51/business_logic/blocs/catalogBloc/catalog_bloc.dart';
 import 'package:area_51/constants/colors.dart';
 import 'package:area_51/data/repositories/cart_Products.dart';
+import 'package:area_51/presentation/pages/catalog.dart';
 import 'package:area_51/presentation/routes/app_routes.dart';
 import 'package:area_51/presentation/widgets/bottomNavBar.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +31,8 @@ class MyApp extends StatelessWidget {
         BlocProvider<ThemeCubit>(
           create: ((context) => ThemeCubit()),
         ),
-        BlocProvider<CartBloc>(create: ((context) => CartBloc()))
+        BlocProvider<CartBloc>(create: ((context) => CartBloc())),
+        BlocProvider<CatalogBloc>(create: ((context) => CatalogBloc()))
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -45,6 +48,7 @@ class MyApp extends StatelessWidget {
                 }
                 return Scaffold(
                   backgroundColor: theme.mainAccent,
+                  extendBody: true,
                   body: BottomNavBarTabs(
                     cart: cart,
                     state: state,

@@ -1,3 +1,4 @@
+import 'package:area_51/business_logic/blocs/catalogBloc/catalog_bloc.dart';
 import 'package:area_51/constants/colors.dart';
 import 'package:area_51/presentation/pages/productPage.dart';
 import 'package:area_51/presentation/screens/cart.dart';
@@ -62,7 +63,7 @@ class ProductListing extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        DefaultTabController.of(context)!.animateTo(2);
+        BlocProvider.of<CatalogBloc>(context).add(ShowProductEvent(product));
       },
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Expanded(
