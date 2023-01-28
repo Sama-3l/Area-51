@@ -1,24 +1,24 @@
-// ignore_for_file: must_be_immutable
-
 part of 'cart_bloc.dart';
 
 @immutable
-abstract class CartEvent extends Equatable{
-  late CartProducts cart;
+abstract class CartEvent {
+  final List<Map> cartProducts;
 
-  CartEvent({required this.cart});
+  CartEvent({required this.cartProducts});
 }
 
-class ProductAddedEvent extends CartEvent{
-  ProductAddedEvent({required super.cart});
-
-  @override
-  List<Object?> get props => [];
+class AddToCartEvent extends CartEvent{
+  AddToCartEvent({required super.cartProducts});
 }
 
-class ProductRemovedEvent extends CartEvent{
-  ProductRemovedEvent({required super.cart});
+class RemoveFromCartEvent extends CartEvent{
+  RemoveFromCartEvent({required super.cartProducts});
+}
 
-  @override
-  List<Object?> get props => [];
+class IncrementProductEvent extends CartEvent{
+  IncrementProductEvent({required super.cartProducts});
+}
+
+class DecrementProductEvent extends CartEvent{
+  DecrementProductEvent({required super.cartProducts});
 }

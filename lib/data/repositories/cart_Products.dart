@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../models/product.dart';
 
 class CartProducts {
-  List<Product> cartProducts = [];
+  List<Map> cartProducts = [];
     // Product(
     //     price: 999.99,
     //     // category: "Headphones",

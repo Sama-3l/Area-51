@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors, curly_braces_in_flow_control_structures
 
-import 'package:area_51/business_logic/blocs/cartbloc/cart_bloc.dart';
 import 'package:area_51/business_logic/blocs/catalogBloc/catalog_bloc.dart';
 import 'package:area_51/business_logic/cubits/themeCubit/theme_cubit.dart';
 import 'package:area_51/data/models/product.dart';
@@ -40,7 +39,8 @@ class _CatalogState extends State<Catalog> {
               cart: widget.cart,
               catalogProducts: widget.catalogProducts);
         else if (state is ShowProductState) {
-          return ProductPage(theme: widget.theme, product: state.product);
+          return ProductPage(
+              theme: widget.theme, product: state.product, cart: widget.cart);
         } else {
           return CatalogListing(
               theme: widget.theme,

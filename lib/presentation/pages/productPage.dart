@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:area_51/business_logic/blocs/catalogBloc/catalog_bloc.dart';
+import 'package:area_51/data/repositories/cart_Products.dart';
 import 'package:area_51/presentation/screens/cart.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:carbon_icons/carbon_icons.dart';
@@ -11,13 +12,19 @@ import 'package:bloc/bloc.dart';
 
 import 'package:area_51/constants/colors.dart';
 
+import '../../business_logic/blocs/cartBloc/cart_bloc.dart';
 import '../../data/models/product.dart';
 
 class ProductPage extends StatefulWidget {
-  ProductPage({super.key, required this.theme, required this.product});
+  ProductPage(
+      {super.key,
+      required this.theme,
+      required this.product,
+      required this.cart});
 
   LightMode theme;
   Product product;
+  CartProducts cart;
 
   @override
   State<ProductPage> createState() => _ProductPageState();
@@ -60,7 +67,8 @@ class _ProductPageState extends State<ProductPage> {
                           padding: const EdgeInsets.only(left: 18),
                           child: IconButton(
                               onPressed: () {
-                                BlocProvider.of<CatalogBloc>(context).add(ShowCatalogEvent(widget.product));
+                                BlocProvider.of<CatalogBloc>(context)
+                                    .add(ShowCatalogEvent(widget.product));
                               },
                               padding: EdgeInsets.zero,
                               icon: Icon(Icons.arrow_back_ios_new_rounded,
@@ -103,7 +111,7 @@ class _ProductPageState extends State<ProductPage> {
                                 SizedBox(
                                   width: constraints.maxWidth * 0.9,
                                   child: AutoSizeText(
-                                    "${widget.product.name}",
+                                    widget.product.name,
                                     maxFontSize: 23,
                                     minFontSize: 18,
                                     maxLines: 2,
@@ -131,7 +139,7 @@ class _ProductPageState extends State<ProductPage> {
                                   child: SizedBox(
                                     width: constraints.maxWidth * 0.9,
                                     child: AutoSizeText(
-                                      "${widget.product.description}",
+                                      widget.product.description,
                                       maxFontSize: 15,
                                       minFontSize: 10,
                                       maxLines: 6,
@@ -161,6 +169,123 @@ class _ProductPageState extends State<ProductPage> {
                                         offset: Offset(0, -7),
                                         blurRadius: 20)
                                   ], color: widget.theme.mainAccent),
+                                  child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Align(
+                                          alignment: Alignment.topLeft,
+                                          child: FractionallySizedBox(
+                                            heightFactor: 0.6,
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 25, top: 8),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text("Price",
+                                                      style:
+                                                          GoogleFonts.poppins(
+                                                              fontSize: 15,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              color: widget
+                                                                  .theme
+                                                                  .oppAccent
+                                                                  .withOpacity(
+                                                                      0.7))),
+                                                  Text(
+                                                      '\$${widget.product.price}',
+                                                      style:
+                                                          GoogleFonts.poppins(
+                                                              fontSize: 18,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              color: widget
+                                                                  .theme
+                                                                  .oppAccent))
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Align(
+                                              alignment: Alignment.topRight,
+                                              child: SizedBox(
+                                                child: LayoutBuilder(builder:
+                                                    ((context, constraints) {
+                                                  return Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            top: 20, right: 20),
+                                                    child: BlocBuilder<CartBloc,
+                                                        CartState>(
+                                                      builder:
+                                                          (context, state) {
+                                                        return GestureDetector(
+                                                          onTap: () {
+                                                            DefaultTabController
+                                                                    .of(context)
+                                                                .animateTo(2);
+                                                            final Map
+                                                                addToCart = {
+                                                              "name": widget
+                                                                  .product,
+                                                              "count": 0,
+                                                            };  
+                                                            widget.cart
+                                                                .cartProducts
+                                                                .add(addToCart);
+                                                            BlocProvider.of<
+                                                                        CartBloc>(
+                                                                    context)
+                                                                .add(AddToCartEvent(
+                                                                    cartProducts:
+                                                                        widget
+                                                                            .cart
+                                                                            .cartProducts));
+                                                          },
+                                                          child: Container(
+                                                              decoration: BoxDecoration(
+                                                                  color: widget
+                                                                      .theme
+                                                                      .oppAccent,
+                                                                  borderRadius:
+                                                                      BorderRadius.all(
+                                                                          Radius.circular(
+                                                                              60))),
+                                                              height: constraints
+                                                                      .maxHeight *
+                                                                  0.2,
+                                                              width: constraints
+                                                                      .maxWidth *
+                                                                  0.55,
+                                                              child: Center(
+                                                                child: Text(
+                                                                  'Add to cart',
+                                                                  style: GoogleFonts.poppins(
+                                                                      fontSize:
+                                                                          10,
+                                                                      color: widget
+                                                                          .theme
+                                                                          .mainAccent,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w800),
+                                                                ),
+                                                              )),
+                                                        );
+                                                      },
+                                                    ),
+                                                  );
+                                                })),
+                                              )),
+                                        ),
+                                      ]),
                                 ),
                               ));
                         })),

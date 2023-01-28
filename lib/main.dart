@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:area_51/business_logic/blocs/cartbloc/cart_bloc.dart';
+import 'package:area_51/business_logic/blocs/cartBloc/cart_bloc.dart';
 import 'package:area_51/business_logic/blocs/catalogBloc/catalog_bloc.dart';
 import 'package:area_51/constants/colors.dart';
 import 'package:area_51/data/repositories/cart_Products.dart';

@@ -64,6 +64,7 @@ class ProductListing extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         BlocProvider.of<CatalogBloc>(context).add(ShowProductEvent(product));
+        DefaultTabController.of(context).animateTo(1);
       },
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Expanded(
