@@ -2,7 +2,7 @@
 
 import 'package:area_51/business_logic/cubits/themeCubit/theme_cubit.dart';
 import 'package:area_51/constants/colors.dart';
-import 'package:area_51/presentation/widgets/homeScreenLists.dart';
+import 'package:area_51/presentation/widgets/homeWidgets/homeScreenLists.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

@@ -235,7 +235,7 @@ class _ProductPageState extends State<ProductPage> {
                                                                 addToCart = {
                                                               "name": widget
                                                                   .product,
-                                                              "count": 0,
+                                                              "count": 1,
                                                             };  
                                                             widget.cart
                                                                 .cartProducts

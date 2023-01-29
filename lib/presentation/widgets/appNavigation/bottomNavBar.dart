@@ -7,12 +7,12 @@ import 'package:area_51/data/repositories/products_Repo.dart';
 import 'package:area_51/presentation/pages/productPage.dart';
 import 'package:carbon_icons/carbon_icons.dart';
 import 'package:flutter/material.dart';
-import '../../business_logic/cubits/themeCubit/theme_cubit.dart';
-import '../screens/home.dart';
-import '../screens/search.dart';
-import '../screens/cart.dart';
-import '../screens/account.dart';
-import '../pages/catalog.dart';
+import '../../../business_logic/cubits/themeCubit/theme_cubit.dart';
+import '../../screens/home.dart';
+import '../../screens/search.dart';
+import '../../screens/cart.dart';
+import '../../screens/account.dart';
+import '../../pages/catalog.dart';
 import 'package:area_51/constants/colors.dart';
 import 'package:area_51/constants/dimensions.dart';
 

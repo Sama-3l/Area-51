@@ -2,11 +2,13 @@
 
 import 'package:area_51/constants/colors.dart';
 import 'package:area_51/data/repositories/cart_Products.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../business_logic/blocs/cartBloc/cart_bloc.dart';
+import '../widgets/cartWidgets/cartButtons.dart';
 
 class Cart extends StatefulWidget {
   Cart({super.key, required this.theme, required this.cart});
@@ -90,33 +92,62 @@ class _CartListingsState extends State<CartListings> {
               Expanded(
                   child: Padding(
                 padding: const EdgeInsets.only(left: 12),
-                child: SizedBox(
-                  height: MediaQuery.of(context).size.height*0.1,
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(widget.productListing['name'].name,
-                            style: GoogleFonts.poppins(
-                                fontSize: 15,
-                                color: widget.theme.oppAccent,
-                                fontWeight: FontWeight.bold)),
-                        Text("\$${widget.productListing['name'].price}",
-                            style: GoogleFonts.poppins(
-                                fontSize: 13,
-                                color:
-                                    widget.theme.oppAccent.withOpacity(0.5))),
-                      ]),
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    return SizedBox(
+                      height: constraints.maxWidth * 0.9,
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            AutoSizeText(widget.productListing['name'].name,
+                                maxFontSize: 15,
+                                minFontSize: 10,
+                                maxLines: 2,
+                                style: GoogleFonts.poppins(
+                                    fontSize: 15,
+                                    color: widget.theme.oppAccent,
+                                    fontWeight: FontWeight.bold)),
+                            AutoSizeText(
+                                "\$${widget.productListing['name'].price}",
+                                maxFontSize: 13,
+                                minFontSize: 8,
+                                maxLines: 1,
+                                style: GoogleFonts.poppins(
+                                    fontSize: 13,
+                                    color: widget.theme.oppAccent
+                                        .withOpacity(0.5))),
+                          ]),
+                    );
+                  },
                 ),
               )),
               Padding(
-                padding: const EdgeInsets.only(left: 56),
+                padding: const EdgeInsets.only(left: 40),
                 child: Container(
-                  height: MediaQuery.of(context).size.height * 0.1,
-                  width: 30,
-                  decoration: BoxDecoration(
-                      color: widget.theme.productAccent,
-                      borderRadius: BorderRadius.all(Radius.circular(60))),
-                ),
+                    height: MediaQuery.of(context).size.height * 0.115,
+                    width: 37,
+                    decoration: BoxDecoration(
+                        color: widget.theme.productAccent,
+                        borderRadius: BorderRadius.all(Radius.circular(60))),
+                    child: Column(
+                      children: [
+                        CartButtons(
+                            theme: widget.theme,
+                            icon: Icons.add,
+                            forAddition: true),
+                        Spacer(),
+                        Text("${widget.productListing['count']}",
+                            style: GoogleFonts.poppins(
+                                fontSize: 10,
+                                color: widget.theme.oppAccent,
+                                fontWeight: FontWeight.w300)),
+                        Spacer(),
+                        CartButtons(
+                            theme: widget.theme,
+                            icon: Icons.remove,
+                            forAddition: false)
+                      ],
+                    )),
               )
             ],
           );

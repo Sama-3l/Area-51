@@ -6,7 +6,7 @@ import 'package:area_51/constants/colors.dart';
 import 'package:area_51/data/repositories/cart_Products.dart';
 import 'package:area_51/presentation/pages/catalog.dart';
 import 'package:area_51/presentation/routes/app_routes.dart';
-import 'package:area_51/presentation/widgets/bottomNavBar.dart';
+import 'package:area_51/presentation/widgets/appNavigation/bottomNavBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../presentation/screens/home.dart';
