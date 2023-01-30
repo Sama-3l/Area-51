@@ -1,17 +1,40 @@
+import 'package:area_51/business_logic/blocs/cartBloc/cart_bloc.dart';
+import 'package:area_51/data/repositories/cart_Products.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../constants/colors.dart';
+import '../../../data/models/product.dart';
 
 class CartButtons extends StatelessWidget {
   CartButtons(
       {super.key,
       required this.theme,
       required this.icon,
-      required this.forAddition});
+      required this.forAddition,
+      required this.cart,
+      required this.product,
+      required this.productCartIndex});
 
   LightMode theme;
   IconData icon;
   bool forAddition;
+  CartProducts cart;
+  Product product;
+  int productCartIndex;
+
+  void increment() {
+    cart.cartProducts[productCartIndex]['count'] =
+        cart.cartProducts[productCartIndex]['count'] + 1;
+  }
+
+  void decrement() {
+    cart.cartProducts[productCartIndex]['count'] =
+        cart.cartProducts[productCartIndex]['count'] - 1;
+    if (cart.cartProducts[productCartIndex]['count'] == 0) {
+      cart.cartProducts.removeAt(productCartIndex);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +42,11 @@ class CartButtons extends StatelessWidget {
         ? Padding(
             padding: const EdgeInsets.only(top: 5),
             child: GestureDetector(
-              onTap: () {},
+              onTap: () {
+                increment();
+                BlocProvider.of<CartBloc>(context)
+                    .add(AddToCartEvent(cartProducts: cart.cartProducts));
+              },
               child: Container(
                 decoration: BoxDecoration(
                     color: theme.mainAccent,
@@ -35,6 +62,9 @@ class CartButtons extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 5),
             child: GestureDetector(
               onTap: () {
+                decrement();
+                BlocProvider.of<CartBloc>(context)
+                    .add(AddToCartEvent(cartProducts: cart.cartProducts));
               },
               child: Container(
                 decoration: BoxDecoration(

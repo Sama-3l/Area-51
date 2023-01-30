@@ -68,6 +68,7 @@ class CatalogListing extends StatelessWidget {
     return Scaffold(
         backgroundColor: theme.mainAccent,
         body: CustomScrollView(
+          key: PageStorageKey<String>('products'),
           slivers: [
             SliverToBoxAdapter(
               child: Column(children: [

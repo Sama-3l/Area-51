@@ -42,16 +42,29 @@ class _CartState extends State<Cart> {
                     itemCount: widget.cart.cartProducts.length,
                     itemBuilder: ((context, index) {
                       return CartListings(
+                          cart: widget.cart,
                           theme: widget.theme,
-                          productListing: widget.cart.cartProducts[index]);
+                          productListing: widget.cart.cartProducts[index],
+                          productCartIndex: index);
                     }));
+              } else if (state is CartInitial) {
+                return Align(
+                  alignment: Alignment(0, -0.3),
+                  child: Text("No Products In The Cart",
+                      style: GoogleFonts.poppins(
+                          fontSize: 17,
+                          color: widget.theme.oppAccent,
+                          fontWeight: FontWeight.bold)),
+                );
               } else {
                 return ListView.builder(
                     itemCount: widget.cart.cartProducts.length,
                     itemBuilder: ((context, index) {
                       return CartListings(
+                          cart: widget.cart,
                           theme: widget.theme,
-                          productListing: widget.cart.cartProducts[index]);
+                          productListing: widget.cart.cartProducts[index],
+                          productCartIndex: index);
                     }));
               }
             },
@@ -63,16 +76,31 @@ class _CartState extends State<Cart> {
 }
 
 class CartListings extends StatefulWidget {
-  CartListings({super.key, required this.theme, required this.productListing});
+  CartListings(
+      {super.key,
+      required this.theme,
+      required this.productListing,
+      required this.cart,
+      required this.productCartIndex});
 
   LightMode theme;
   Map productListing;
+  CartProducts cart;
+  int productCartIndex;
 
   @override
   State<CartListings> createState() => _CartListingsState();
 }
 
 class _CartListingsState extends State<CartListings> {
+  String addingZeroToCount(int count) {
+    if (count < 10) {
+      return "0$count";
+    } else {
+      return "$count";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -99,6 +127,7 @@ class _CartListingsState extends State<CartListings> {
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            Spacer(),
                             AutoSizeText(widget.productListing['name'].name,
                                 maxFontSize: 15,
                                 minFontSize: 10,
@@ -115,7 +144,8 @@ class _CartListingsState extends State<CartListings> {
                                 style: GoogleFonts.poppins(
                                     fontSize: 13,
                                     color: widget.theme.oppAccent
-                                        .withOpacity(0.5))),
+                                        .withOpacity(0.7))),
+                            Spacer(flex: 3)
                           ]),
                     );
                   },
@@ -132,11 +162,15 @@ class _CartListingsState extends State<CartListings> {
                     child: Column(
                       children: [
                         CartButtons(
-                            theme: widget.theme,
-                            icon: Icons.add,
-                            forAddition: true),
+                          theme: widget.theme,
+                          icon: Icons.add,
+                          forAddition: true,
+                          cart: widget.cart,
+                          product: widget.productListing['name'],
+                          productCartIndex: widget.productCartIndex,
+                        ),
                         Spacer(),
-                        Text("${widget.productListing['count']}",
+                        Text(addingZeroToCount(widget.productListing['count']),
                             style: GoogleFonts.poppins(
                                 fontSize: 10,
                                 color: widget.theme.oppAccent,
@@ -145,7 +179,10 @@ class _CartListingsState extends State<CartListings> {
                         CartButtons(
                             theme: widget.theme,
                             icon: Icons.remove,
-                            forAddition: false)
+                            forAddition: false,
+                            cart: widget.cart,
+                            product: widget.productListing['name'],
+                            productCartIndex: widget.productCartIndex)
                       ],
                     )),
               )

@@ -43,6 +43,7 @@ class _HomeScreenListsState extends State<HomeScreenLists> {
                   fontSize: 24))),
       Expanded(
           child: ListView.builder(
+            key: PageStorageKey<String>(widget.title),
               scrollDirection: Axis.horizontal,
               itemCount: productsList.length,
               itemBuilder: ((context, index) {
