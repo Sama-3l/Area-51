@@ -24,7 +24,9 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    return ListView(children: [
+    return ListView(
+      key: PageStorageKey<String>('Home'),
+      children: [
       Padding(
         padding: const EdgeInsets.only(top: 20),
         child: AspectRatio(
