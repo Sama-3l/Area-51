@@ -34,4 +34,10 @@ class Product {
       // required this.stockAvail,
       // required this.likes,
       required this.name});
+
+ /* Map toJson() => {
+    "name" : name,
+    "price" : price,
+    "description" : description
+  };*/
 }

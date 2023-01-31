@@ -1,13 +1,12 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, curly_braces_in_flow_control_structures
 
-import 'package:area_51/business_logic/cubits/themeCubit/theme_cubit.dart';
 import 'package:area_51/constants/colors.dart';
+import 'package:area_51/data/models/product.dart';
 import 'package:area_51/presentation/widgets/homeWidgets/homeScreenLists.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:google_fonts/google_fonts.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 
 import '../../data/repositories/products_Repo.dart';
 
@@ -22,6 +21,23 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
+  final ref = FirebaseFirestore.instance.collection('Products');
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    for(int i = 0; i < widget.products.productList.length; i++)
+    {final Product product = widget.products.productList[i];
+      ref.doc(product.name).set({
+        "name" : product.name,
+        "price" : product.price,
+        "description" : product.description
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView(

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:area_51/business_logic/blocs/cartBloc/cart_bloc.dart';
 import 'package:area_51/data/repositories/cart_Products.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../constants/colors.dart';
 import '../../../data/models/product.dart';
+
 
 class CartButtons extends StatelessWidget {
   CartButtons(
@@ -24,6 +27,7 @@ class CartButtons extends StatelessWidget {
   int productCartIndex;
 
   void increment() {
+    final Product product = cart.cartProducts[productCartIndex]['name'];
     cart.cartProducts[productCartIndex]['count'] =
         cart.cartProducts[productCartIndex]['count'] + 1;
   }
