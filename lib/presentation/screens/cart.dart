@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:area_51/constants/colors.dart';
+import 'package:area_51/data/models/user.dart';
 import 'package:area_51/data/repositories/cart_Products.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
@@ -11,16 +12,25 @@ import '../../business_logic/blocs/cartBloc/cart_bloc.dart';
 import '../widgets/cartWidgets/cartButtons.dart';
 
 class Cart extends StatefulWidget {
-  Cart({super.key, required this.theme, required this.cart});
+  Cart({super.key, required this.theme, required this.user});
 
   LightMode theme;
-  CartProducts cart;
+  CurrentUser user;
 
   @override
   State<Cart> createState() => _CartState();
 }
 
 class _CartState extends State<Cart> {
+  @override
+  void initState() {
+    super.initState();
+    if (widget.user.cartProducts.cartProducts.isNotEmpty) {
+      BlocProvider.of<CartBloc>(context).add(
+          AddToCartEvent(cartProducts: widget.user.cartProducts.cartProducts));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -39,13 +49,14 @@ class _CartState extends State<Cart> {
             builder: (context, state) {
               if (state is AddedToCartState) {
                 return ListView.builder(
-                    itemCount: widget.cart.cartProducts.length,
+                    itemCount: widget.user.cartProducts.cartProducts.length,
                     itemBuilder: ((context, index) {
                       return CartListings(
-                          cart: widget.cart,
                           theme: widget.theme,
-                          productListing: widget.cart.cartProducts[index],
-                          productCartIndex: index);
+                          productListing:
+                              widget.user.cartProducts.cartProducts[index],
+                          productCartIndex: index,
+                          user: widget.user);
                     }));
               } else if (state is CartInitial) {
                 return Align(
@@ -58,13 +69,15 @@ class _CartState extends State<Cart> {
                 );
               } else {
                 return ListView.builder(
-                    itemCount: widget.cart.cartProducts.length,
+                    itemCount: widget.user.cartProducts.cartProducts.length,
                     itemBuilder: ((context, index) {
                       return CartListings(
-                          cart: widget.cart,
-                          theme: widget.theme,
-                          productListing: widget.cart.cartProducts[index],
-                          productCartIndex: index);
+                        theme: widget.theme,
+                        productListing:
+                            widget.user.cartProducts.cartProducts[index],
+                        productCartIndex: index,
+                        user: widget.user,
+                      );
                     }));
               }
             },
@@ -80,13 +93,13 @@ class CartListings extends StatefulWidget {
       {super.key,
       required this.theme,
       required this.productListing,
-      required this.cart,
-      required this.productCartIndex});
+      required this.productCartIndex,
+      required this.user});
 
   LightMode theme;
   Map productListing;
-  CartProducts cart;
   int productCartIndex;
+  CurrentUser user;
 
   @override
   State<CartListings> createState() => _CartListingsState();
@@ -165,9 +178,9 @@ class _CartListingsState extends State<CartListings> {
                           theme: widget.theme,
                           icon: Icons.add,
                           forAddition: true,
-                          cart: widget.cart,
                           product: widget.productListing['name'],
                           productCartIndex: widget.productCartIndex,
+                          user: widget.user,
                         ),
                         Spacer(),
                         Text(addingZeroToCount(widget.productListing['count']),
@@ -180,9 +193,9 @@ class _CartListingsState extends State<CartListings> {
                             theme: widget.theme,
                             icon: Icons.remove,
                             forAddition: false,
-                            cart: widget.cart,
                             product: widget.productListing['name'],
-                            productCartIndex: widget.productCartIndex)
+                            productCartIndex: widget.productCartIndex,
+                            user: widget.user)
                       ],
                     )),
               )

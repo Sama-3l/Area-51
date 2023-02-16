@@ -3,6 +3,7 @@
 import 'package:area_51/business_logic/blocs/catalogBloc/catalog_bloc.dart';
 import 'package:area_51/business_logic/cubits/themeCubit/theme_cubit.dart';
 import 'package:area_51/data/models/product.dart';
+import 'package:area_51/data/models/user.dart';
 import 'package:area_51/data/repositories/cart_Products.dart';
 import 'package:area_51/presentation/pages/productPage.dart';
 import 'package:flutter/material.dart';
@@ -17,12 +18,12 @@ class Catalog extends StatefulWidget {
   Catalog(
       {super.key,
       required this.theme,
-      required this.cart,
-      required this.catalogProducts});
+      required this.catalogProducts,
+      required this.user});
 
   LightMode theme;
-  CartProducts cart;
   ProductList catalogProducts;
+  CurrentUser user;
 
   @override
   State<Catalog> createState() => _CatalogState();
@@ -36,15 +37,15 @@ class _CatalogState extends State<Catalog> {
         if (state is ShowCatalogState)
           return CatalogListing(
               theme: widget.theme,
-              cart: widget.cart,
+              cart: widget.user.cartProducts,
               catalogProducts: widget.catalogProducts);
         else if (state is ShowProductState) {
           return ProductPage(
-              theme: widget.theme, product: state.product, cart: widget.cart);
+              theme: widget.theme, product: state.product, user: widget.user);
         } else {
           return CatalogListing(
               theme: widget.theme,
-              cart: widget.cart,
+              cart: widget.user.cartProducts,
               catalogProducts: widget.catalogProducts);
         }
       },

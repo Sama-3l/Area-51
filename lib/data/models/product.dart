@@ -18,7 +18,7 @@ class Product {
   // final DateTime dataAdded;
   // final int stockAvail;
   // final int likes;
-  
+
   Product(
       {required this.price,
       // required this.category,
@@ -35,9 +35,4 @@ class Product {
       // required this.likes,
       required this.name});
 
- /* Map toJson() => {
-    "name" : name,
-    "price" : price,
-    "description" : description
-  };*/
 }

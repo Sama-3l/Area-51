@@ -1,10 +1,12 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, must_be_immutable
 
 import 'dart:math';
 
+import 'package:area_51/data/models/user.dart';
 import 'package:area_51/data/repositories/cart_Products.dart';
 import 'package:area_51/data/repositories/products_Repo.dart';
 import 'package:area_51/presentation/pages/productPage.dart';
+import 'package:area_51/presentation/screens/login.dart';
 import 'package:carbon_icons/carbon_icons.dart';
 import 'package:flutter/material.dart';
 import '../../../business_logic/cubits/themeCubit/theme_cubit.dart';
@@ -57,11 +59,11 @@ class BottomNavBarTabs extends StatefulWidget {
       {super.key,
       required this.state,
       required this.theme,
-      required this.cart});
+      required this.user});
 
   ThemeState state;
   LightMode theme;
-  CartProducts cart;
+  CurrentUser user;
 
   @override
   State<BottomNavBarTabs> createState() => _BottomNavBarTabsState();
@@ -74,10 +76,10 @@ class _BottomNavBarTabsState extends State<BottomNavBarTabs> {
   Widget build(BuildContext context) {
     return TabBarView(children: [
       Home(theme: widget.theme, products: allProducts),
-      // ProductPage(theme: widget.theme, product: allProducts.productList[0]),
-      Catalog(theme: widget.theme, cart: widget.cart, catalogProducts: allProducts),
-      Cart(theme: widget.theme, cart: widget.cart),
-      Account(state: widget.state, theme: widget.theme)
+      Catalog(
+          theme: widget.theme, catalogProducts: allProducts, user: widget.user),
+      Cart(theme: widget.theme, user: widget.user),
+      Account(state: widget.state, theme: widget.theme, user: widget.user)
     ]);
   }
 }

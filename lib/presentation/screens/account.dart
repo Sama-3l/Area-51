@@ -2,16 +2,18 @@
 
 import 'package:area_51/business_logic/cubits/themeCubit/theme_cubit.dart';
 import 'package:area_51/constants/colors.dart';
+import 'package:area_51/data/models/user.dart';
 import 'package:carbon_icons/carbon_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Account extends StatefulWidget {
-  Account({super.key, required this.state, required this.theme});
+  Account({super.key, required this.state, required this.theme, required this.user});
 
   ThemeState state;
   LightMode theme;
+  CurrentUser user;
 
   @override
   State<Account> createState() => _AccountState();

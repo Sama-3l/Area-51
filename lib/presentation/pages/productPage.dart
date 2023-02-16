@@ -1,10 +1,15 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:convert';
+
 import 'package:area_51/business_logic/blocs/catalogBloc/catalog_bloc.dart';
+import 'package:area_51/constants/methods.dart';
+import 'package:area_51/data/models/user.dart';
 import 'package:area_51/data/repositories/cart_Products.dart';
 import 'package:area_51/presentation/screens/cart.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:carbon_icons/carbon_icons.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -20,17 +25,21 @@ class ProductPage extends StatefulWidget {
       {super.key,
       required this.theme,
       required this.product,
-      required this.cart});
+      required this.user});
 
   LightMode theme;
   Product product;
-  CartProducts cart;
+  CurrentUser user;
 
   @override
   State<ProductPage> createState() => _ProductPageState();
 }
 
 class _ProductPageState extends State<ProductPage> {
+  final userData = FirebaseFirestore.instance.collection('Users');
+
+  Methods methods = Methods();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -236,18 +245,35 @@ class _ProductPageState extends State<ProductPage> {
                                                               "name": widget
                                                                   .product,
                                                               "count": 1,
-                                                            };  
-                                                            widget.cart
+                                                            };
+                                                            widget
+                                                                .user
+                                                                .cartProducts
                                                                 .cartProducts
                                                                 .add(addToCart);
+                                                            final userData =
+                                                                FirebaseFirestore
+                                                                    .instance
+                                                                    .collection(
+                                                                        'Users')
+                                                                    .doc(widget
+                                                                        .user
+                                                                        .username);
+                                                            userData.update({
+                                                              'cart': methods
+                                                                  .cartEntry(widget
+                                                                      .user
+                                                                      .cartProducts
+                                                                      .cartProducts)
+                                                            });
                                                             BlocProvider.of<
                                                                         CartBloc>(
                                                                     context)
                                                                 .add(AddToCartEvent(
-                                                                    cartProducts:
-                                                                        widget
-                                                                            .cart
-                                                                            .cartProducts));
+                                                                    cartProducts: widget
+                                                                        .user
+                                                                        .cartProducts
+                                                                        .cartProducts));
                                                           },
                                                           child: Container(
                                                               decoration: BoxDecoration(

@@ -21,28 +21,24 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
   final ref = FirebaseFirestore.instance.collection('Products');
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    for(int i = 0; i < widget.products.productList.length; i++)
-    {final Product product = widget.products.productList[i];
+    for (int i = 0; i < widget.products.productList.length; i++) {
+      final Product product = widget.products.productList[i];
       ref.doc(product.name).set({
-        "name" : product.name,
-        "price" : product.price,
-        "description" : product.description
+        "name": product.name,
+        "price": product.price,
+        "description": product.description
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      key: PageStorageKey<String>('Home'),
-      children: [
+    return ListView(key: PageStorageKey<String>('Home'), children: [
       Padding(
         padding: const EdgeInsets.only(top: 20),
         child: AspectRatio(
