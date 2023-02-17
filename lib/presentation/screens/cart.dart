@@ -58,7 +58,7 @@ class _CartState extends State<Cart> {
                           productCartIndex: index,
                           user: widget.user);
                     }));
-              } else if (state is CartInitial) {
+              } else if (state is CartInitial || state is RemovedFromCartState) {
                 return Align(
                   alignment: Alignment(0, -0.3),
                   child: Text("No Products In The Cart",

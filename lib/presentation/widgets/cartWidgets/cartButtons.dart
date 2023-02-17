@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_literals_to_create_immutables
+
 import 'dart:convert';
 
 import 'package:area_51/business_logic/blocs/cartBloc/cart_bloc.dart';
@@ -41,7 +43,7 @@ class CartButtons extends StatelessWidget {
         .update({'cart': methods.cartEntry(user.cartProducts.cartProducts)});
   }
 
-  void decrement() {
+  void decrement(BuildContext context) {
     user.cartProducts.cartProducts[productCartIndex]['count'] =
         user.cartProducts.cartProducts[productCartIndex]['count'] - 1;
     if (user.cartProducts.cartProducts[productCartIndex]['count'] == 0) {
@@ -51,11 +53,12 @@ class CartButtons extends StatelessWidget {
         FirebaseFirestore.instance.collection('Users').doc(user.username);
     if (user.cartProducts.cartProducts.isEmpty) {
       userData.update({'cart': null});
+      BlocProvider.of<CartBloc>(context)
+          .add(RemoveFromCartEvent(cartProducts: []));
     } else {
       userData
           .update({'cart': methods.cartEntry(user.cartProducts.cartProducts)});
     }
-    print(user.cartProducts.cartProducts);
   }
 
   @override
@@ -84,9 +87,7 @@ class CartButtons extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 5),
             child: GestureDetector(
               onTap: () {
-                decrement();
-                BlocProvider.of<CartBloc>(context).add(AddToCartEvent(
-                    cartProducts: user.cartProducts.cartProducts));
+                decrement(context);
               },
               child: Container(
                 decoration: BoxDecoration(

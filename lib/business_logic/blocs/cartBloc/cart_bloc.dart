@@ -14,5 +14,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     on<AddToCartEvent>((event, emit) {
       emit(AddedToCartState(cartProducts: event.cartProducts));
     });
+    on<RemoveFromCartEvent>((event, emit) {
+      emit(RemovedFromCartState(cartProducts: event.cartProducts));
+    });
   }
 }
