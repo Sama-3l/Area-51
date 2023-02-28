@@ -8,15 +8,19 @@ import 'package:area_51/main.dart';
 import 'package:area_51/presentation/screens/mainApp.dart';
 import 'package:area_51/presentation/widgets/login/InputField.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:carbon_icons/carbon_icons.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:area_51/alogrithms/aes.dart';
 
+import '../../business_logic/cubits/themeCubit/theme_cubit.dart';
 import '../../data/models/product.dart';
 import '../../data/models/user.dart';
+import 'signUp.dart';
 
 class LogIn extends StatefulWidget {
   LogIn({super.key});
@@ -26,8 +30,6 @@ class LogIn extends StatefulWidget {
 }
 
 class _LogInState extends State<LogIn> {
-  LightMode theme = LightMode();
-
   bool checkInput(String text) {
     return true;
   }
@@ -35,18 +37,15 @@ class _LogInState extends State<LogIn> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: LogInForm(theme: theme),
+      home: LogInForm(),
     );
   }
 }
 
 class LogInForm extends StatelessWidget {
-  LogInForm({
-    super.key,
-    required this.theme,
-  });
+  LogInForm({super.key});
 
-  final LightMode theme;
+  final LightMode theme = DarkMode();
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
   final users = FirebaseFirestore.instance.collection('Users');
@@ -120,29 +119,15 @@ class LogInForm extends StatelessWidget {
                                       indexOfUser = i;
                                     }
                                   }
-                                  /*users.doc(username.text).set({
-                                      'name': username.text,
-                                      'password':
-                                          EncryptData.encryptAES(password.text),
-                                      'cart': null,
-                                      'wishlist': null
-                                    });*/
                                   if (!exists) {
                                     Navigator.of(context).pushReplacement(
                                         MaterialPageRoute(
-                                            builder: (context) =>
-                                                SignUp(theme: theme)));
-                                    /*users.doc(username.text).set({
-                                      'name': username.text,
-                                      'password':
-                                          EncryptData.encryptAES(password.text),
-                                      'cart': null,
-                                      'wishlist': null
-                                    });*/
+                                            builder: (context) => SignUp()));
                                   } else {
                                     CartProducts cart = CartProducts();
                                     WishlistProducts wishlist =
                                         WishlistProducts();
+                                    LightMode appTheme = LightMode();
                                     if (ref.docs.elementAt(
                                                 indexOfUser)['password'] ==
                                             EncryptData.encryptAES(
@@ -184,15 +169,27 @@ class LogInForm extends StatelessWidget {
                                         }
                                         wishlist.wishlist = tempList;
                                       }
+                                      if (ref.docs.elementAt(
+                                              indexOfUser)['theme'] !=
+                                          null) {
+                                        if (ref.docs.elementAt(
+                                                indexOfUser)['theme'] ==
+                                            'Light') {
+                                          appTheme = LightMode();
+                                        } else {
+                                          appTheme = DarkMode();
+                                        }
+                                      }
                                       user = CurrentUser(
                                           cartProducts: cart,
                                           username: ref.docs
                                               .elementAt(indexOfUser)['name'],
-                                          wishListProducts: wishlist);
+                                          wishListProducts: wishlist,
+                                          theme: appTheme);
                                       Navigator.of(context).pushReplacement(
                                           MaterialPageRoute(
                                               builder: (context) => MyApp(
-                                                  theme: theme,
+                                                  theme: appTheme,
                                                   currentUser: user)));
                                     }
                                   }
@@ -221,8 +218,8 @@ class LogInForm extends StatelessWidget {
               alignment: Alignment(0, -0.6),
               child: TextButton(
                   onPressed: () {
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => SignUp(theme: theme)));
+                    Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(builder: (context) => SignUp()));
                   },
                   child: AutoSizeText('New User? Sign up',
                       maxFontSize: 12,
@@ -232,21 +229,5 @@ class LogInForm extends StatelessWidget {
                           decoration: TextDecoration.underline,
                           fontWeight: FontWeight.w500))))
         ]));
-  }
-}
-
-class SignUp extends StatefulWidget {
-  SignUp({super.key, required this.theme});
-
-  LightMode theme;
-
-  @override
-  State<SignUp> createState() => _SignUpState();
-}
-
-class _SignUpState extends State<SignUp> {
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
   }
 }

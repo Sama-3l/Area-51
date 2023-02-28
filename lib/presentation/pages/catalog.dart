@@ -15,7 +15,7 @@ import '../../data/repositories/products_Repo.dart';
 import '../widgets/products/homePageProductItem.dart';
 
 class Catalog extends StatefulWidget {
-  Catalog(
+    Catalog(
       {super.key,
       required this.theme,
       required this.catalogProducts,

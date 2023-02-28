@@ -22,10 +22,11 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<ThemeCubit>(
-          create: ((context) => ThemeCubit()),
+          create: ((context) =>
+              ThemeCubit(theme.runtimeType == LightMode ? true : false)),
         ),
         BlocProvider<CartBloc>(create: ((context) => CartBloc())),
-        BlocProvider<CatalogBloc>(create: ((context) => CatalogBloc()))
+        BlocProvider<CatalogBloc>(create: ((context) => CatalogBloc())),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

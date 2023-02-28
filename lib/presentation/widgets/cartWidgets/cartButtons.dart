@@ -33,7 +33,7 @@ class CartButtons extends StatelessWidget {
   final userData = FirebaseFirestore.instance.collection('Users');
   Methods methods = Methods();
 
-  void increment() async {
+  void increment(BuildContext context) async {
     user.cartProducts.cartProducts[productCartIndex]['count'] =
         user.cartProducts.cartProducts[productCartIndex]['count'] + 1;
 
@@ -41,6 +41,7 @@ class CartButtons extends StatelessWidget {
         FirebaseFirestore.instance.collection('Users').doc(user.username);
     userData
         .update({'cart': methods.cartEntry(user.cartProducts.cartProducts)});
+
   }
 
   void decrement(BuildContext context) {
@@ -58,6 +59,8 @@ class CartButtons extends StatelessWidget {
     } else {
       userData
           .update({'cart': methods.cartEntry(user.cartProducts.cartProducts)});
+      BlocProvider.of<CartBloc>(context)
+          .add(AddToCartEvent(cartProducts: user.cartProducts.cartProducts));
     }
   }
 
@@ -68,7 +71,7 @@ class CartButtons extends StatelessWidget {
             padding: const EdgeInsets.only(top: 5),
             child: GestureDetector(
               onTap: () {
-                increment();
+                increment(context);
                 BlocProvider.of<CartBloc>(context).add(AddToCartEvent(
                     cartProducts: user.cartProducts.cartProducts));
               },

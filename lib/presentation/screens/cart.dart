@@ -3,6 +3,7 @@
 import 'package:area_51/constants/colors.dart';
 import 'package:area_51/data/models/user.dart';
 import 'package:area_51/data/repositories/cart_Products.dart';
+import 'package:area_51/presentation/widgets/cartWidgets/cartOut.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,56 +34,68 @@ class _CartState extends State<Cart> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Stack(
       children: [
-        Center(
-            child: Padding(
-          padding: const EdgeInsets.only(top: 65, bottom: 85),
-          child: Text("Your Cart",
-              style: GoogleFonts.poppins(
-                  fontSize: 28,
-                  color: widget.theme.oppAccent,
-                  fontWeight: FontWeight.bold)),
-        )),
-        Expanded(
-          child: BlocBuilder<CartBloc, CartState>(
-            builder: (context, state) {
-              if (state is AddedToCartState) {
-                return ListView.builder(
-                    itemCount: widget.user.cartProducts.cartProducts.length,
-                    itemBuilder: ((context, index) {
-                      return CartListings(
-                          theme: widget.theme,
-                          productListing:
-                              widget.user.cartProducts.cartProducts[index],
-                          productCartIndex: index,
-                          user: widget.user);
-                    }));
-              } else if (state is CartInitial || state is RemovedFromCartState) {
-                return Align(
-                  alignment: Alignment(0, -0.3),
-                  child: Text("No Products In The Cart",
-                      style: GoogleFonts.poppins(
-                          fontSize: 17,
-                          color: widget.theme.oppAccent,
-                          fontWeight: FontWeight.bold)),
-                );
-              } else {
-                return ListView.builder(
-                    itemCount: widget.user.cartProducts.cartProducts.length,
-                    itemBuilder: ((context, index) {
-                      return CartListings(
-                        theme: widget.theme,
-                        productListing:
-                            widget.user.cartProducts.cartProducts[index],
-                        productCartIndex: index,
-                        user: widget.user,
-                      );
-                    }));
-              }
-            },
-          ),
+        Column(
+          children: [
+            Center(
+                child: Padding(
+              padding: const EdgeInsets.only(top: 50, bottom: 20),
+              child: Text("Your Cart",
+                  style: GoogleFonts.poppins(
+                      fontSize: 28,
+                      color: widget.theme.oppAccent,
+                      fontWeight: FontWeight.bold)),
+            )),
+            Expanded(
+              child: BlocBuilder<CartBloc, CartState>(
+                builder: (context, state) {
+                  if (state is AddedToCartState) {
+                    return ListView.builder(
+                        itemCount: widget.user.cartProducts.cartProducts.length,
+                        itemBuilder: ((context, index) {
+                          return CartListings(
+                              theme: widget.theme,
+                              productListing:
+                                  widget.user.cartProducts.cartProducts[index],
+                              productCartIndex: index,
+                              user: widget.user);
+                        }));
+                  } else if (state is CartInitial ||
+                      state is RemovedFromCartState) {
+                    return Align(
+                      alignment: Alignment(0, -0.3),
+                      child: Text("No Products In The Cart",
+                          style: GoogleFonts.poppins(
+                              fontSize: 17,
+                              color: widget.theme.oppAccent,
+                              fontWeight: FontWeight.bold)),
+                    );
+                  } else {
+                    return ListView.builder(
+                        itemCount: widget.user.cartProducts.cartProducts.length,
+                        itemBuilder: ((context, index) {
+                          return CartListings(
+                            theme: widget.theme,
+                            productListing:
+                                widget.user.cartProducts.cartProducts[index],
+                            productCartIndex: index,
+                            user: widget.user,
+                          );
+                        }));
+                  }
+                },
+              ),
+            ),
+          ],
         ),
+        Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+                padding: EdgeInsets.only(left: 5, right: 5),
+                child: CartPayment(
+                    theme: widget.theme,
+                    cartProducts: widget.user.cartProducts)))
       ],
     );
   }
