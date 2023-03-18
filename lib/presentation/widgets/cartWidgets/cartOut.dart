@@ -20,22 +20,19 @@ class CartPayment extends StatefulWidget {
 }
 
 class _CartPaymentState extends State<CartPayment> {
-  late double price = 0;
+  double price = 0;
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    print(widget.cartProducts.cartProducts);
+  void setPrice() {
+    price = 0;
     for (int i = 0; i < widget.cartProducts.cartProducts.length; i++) {
       price += (widget.cartProducts.cartProducts[i]['name'].price *
           widget.cartProducts.cartProducts[i]['count']);
     }
-    print(price);
   }
 
   @override
   Widget build(BuildContext context) {
+    setPrice();
     return LayoutBuilder(builder: ((context, constraints) {
       return Align(
           alignment: Alignment.bottomCenter,
@@ -51,80 +48,74 @@ class _CartPaymentState extends State<CartPayment> {
                     offset: const Offset(0, -7),
                     blurRadius: 20)
               ], color: widget.theme.mainAccent),
-              child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: FractionallySizedBox(
-                        heightFactor: 0.6,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 25, top: 8),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Price",
-                                  style: GoogleFonts.poppins(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
-                                      color: widget.theme.oppAccent
-                                          .withOpacity(0.7))),
-                              Text('\$${price.toStringAsFixed(2)}',
-                                  style: GoogleFonts.poppins(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      color: widget.theme.oppAccent))
-                            ],
-                          ),
-                        ),
+              child:
+                  Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: FractionallySizedBox(
+                    heightFactor: 0.6,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 25, top: 8),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Price",
+                              style: GoogleFonts.poppins(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  color:
+                                      widget.theme.oppAccent.withOpacity(0.7))),
+                          Text('\$${price.toStringAsFixed(2)}',
+                              style: GoogleFonts.poppins(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: widget.theme.oppAccent))
+                        ],
                       ),
                     ),
-                    Expanded(
-                      child: Align(
-                          alignment: Alignment.topRight,
-                          child: SizedBox(
-                            child: LayoutBuilder(
-                                builder: ((context, constraints) {
-                              return Padding(
-                                padding: const EdgeInsets.only(
-                                    top: 20, right: 20),
-                                child: GestureDetector(
-                                  onTap: () {},
-                                  child: Container(
-                                      decoration: BoxDecoration(
-                                          color: widget.theme.oppAccent,
-                                          borderRadius:
-                                              const BorderRadius.all(
-                                                  Radius.circular(60))),
-                                      height: constraints.maxHeight * 0.2,
-                                      width: constraints.maxWidth * 0.55,
-                                      child: Center(
-                                        child: Row(
-                                          children: [
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.only(
-                                                      left: 22),
-                                              child: Text(
-                                                'Payment Options',
-                                                style: GoogleFonts.poppins(
-                                                    fontSize: 10,
-                                                    color: widget
-                                                        .theme.mainAccent,
-                                                    fontWeight:
-                                                        FontWeight.w800),
-                                              ),
-                                            ),
-                                            Iconify(forward),
-                                          ],
+                  ),
+                ),
+                Expanded(
+                  child: Align(
+                      alignment: Alignment.topRight,
+                      child: SizedBox(
+                        child: LayoutBuilder(builder: ((context, constraints) {
+                          return Padding(
+                            padding: const EdgeInsets.only(top: 20, right: 20),
+                            child: GestureDetector(
+                              onTap: () {},
+                              child: Container(
+                                  decoration: BoxDecoration(
+                                      color: widget.theme.oppAccent,
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(60))),
+                                  height: constraints.maxHeight * 0.2,
+                                  width: constraints.maxWidth * 0.55,
+                                  child: Center(
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 7),
+                                          child: Text(
+                                            'Payment Options',
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 10,
+                                                color: widget.theme.mainAccent,
+                                                fontWeight: FontWeight.w800),
+                                          ),
                                         ),
-                                      )),
-                                ),
-                              );
-                            })),
-                          )),
-                    ),
-                  ]),
+                                        Iconify(forward),
+                                      ],
+                                    ),
+                                  )),
+                            ),
+                          );
+                        })),
+                      )),
+                ),
+              ]),
             ),
           ));
     }));

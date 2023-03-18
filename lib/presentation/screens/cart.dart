@@ -93,9 +93,13 @@ class _CartState extends State<Cart> {
             alignment: Alignment.bottomCenter,
             child: Container(
                 padding: EdgeInsets.only(left: 5, right: 5),
-                child: CartPayment(
-                    theme: widget.theme,
-                    cartProducts: widget.user.cartProducts)))
+                child: BlocBuilder<CartBloc, CartState>(
+                  builder: (context, state) {
+                    return CartPayment(
+                        theme: widget.theme,
+                        cartProducts: widget.user.cartProducts);
+                  },
+                )))
       ],
     );
   }
