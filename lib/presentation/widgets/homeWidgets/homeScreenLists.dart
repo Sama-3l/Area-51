@@ -53,7 +53,7 @@ class _HomeScreenListsState extends State<HomeScreenLists> {
                     dimensions: 180,
                     radius: 25,
                     index: index,
-                    product: productsList[index],);
+                    product: productsList[index]);
               }))),
     ]);
   }

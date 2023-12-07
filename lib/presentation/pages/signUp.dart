@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, prefer_const_constructors
 
 import 'package:area_51/data/repositories/cart_Products.dart';
 import 'package:area_51/data/repositories/wishlist_products.dart';
@@ -16,7 +16,7 @@ import 'login.dart';
 import '../widgets/login/InputField.dart';
 
 class SignUp extends StatefulWidget {
-  SignUp({super.key});
+  const SignUp({super.key});
 
   @override
   State<SignUp> createState() => _SignUpState();

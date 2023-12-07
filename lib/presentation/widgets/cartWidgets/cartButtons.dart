@@ -28,26 +28,6 @@ class CartButtons extends StatelessWidget {
 
   Methods methods = Methods();
 
-  void increment(BuildContext context) async {
-    user.cartProducts.cartProducts[productCartIndex]['count'] =
-        user.cartProducts.cartProducts[productCartIndex]['count'] + 1;
-  }
-
-  void decrement(BuildContext context) {
-    user.cartProducts.cartProducts[productCartIndex]['count'] =
-        user.cartProducts.cartProducts[productCartIndex]['count'] - 1;
-    if (user.cartProducts.cartProducts[productCartIndex]['count'] == 0) {
-      user.cartProducts.cartProducts.removeAt(productCartIndex);
-    }
-    if (user.cartProducts.cartProducts.isEmpty) {
-      BlocProvider.of<CartBloc>(context)
-          .add(RemoveFromCartEvent(cartProducts: []));
-    } else {
-      BlocProvider.of<CartBloc>(context)
-          .add(AddToCartEvent(cartProducts: user.cartProducts.cartProducts));
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return forAddition
@@ -55,7 +35,7 @@ class CartButtons extends StatelessWidget {
             padding: const EdgeInsets.only(top: 5),
             child: GestureDetector(
               onTap: () {
-                increment(context);
+                methods.increment(context, user, productCartIndex);
                 BlocProvider.of<CartBloc>(context).add(AddToCartEvent(
                     cartProducts: user.cartProducts.cartProducts));
               },
@@ -74,7 +54,7 @@ class CartButtons extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 5),
             child: GestureDetector(
               onTap: () {
-                decrement(context);
+                methods.decrement(context, user, productCartIndex);
               },
               child: Container(
                 decoration: BoxDecoration(

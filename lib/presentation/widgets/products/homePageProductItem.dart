@@ -78,16 +78,19 @@ class ProductListing extends StatelessWidget {
                 width: dimensions),
           ),
         ),
-        SizedBox(
-          width: dimensions,
-          child: AutoSizeText(product.name,
-              maxFontSize: 15,
-              minFontSize: 10,
-              maxLines: 2,
-              style: GoogleFonts.inter(
-                  color: theme.oppAccent,
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold)),
+        Padding(
+          padding: EdgeInsets.only(bottom: 10),
+          child: SizedBox(
+            width: dimensions,
+            child: AutoSizeText(product.name,
+                maxFontSize: 15,
+                minFontSize: 10,
+                maxLines: 2,
+                style: GoogleFonts.inter(
+                    color: theme.oppAccent,
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold)),
+          ),
         ),
         AutoSizeText("\$${product.price}",
             maxFontSize: 12,

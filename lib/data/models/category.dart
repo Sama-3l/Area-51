@@ -1,8 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:area_51/data/models/brand.dart';
-import 'package:flutter/cupertino.dart';
-import 'brand.dart';
 import 'product.dart';
 
 class Category {

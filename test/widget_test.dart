@@ -7,7 +7,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import '../lib/main.dart';
 import 'package:area_51/presentation/pages/login.dart';
 
 void main() {

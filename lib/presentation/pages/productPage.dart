@@ -1,6 +1,4 @@
-// ignore_for_file: prefer_const_constructors
-
-import 'dart:convert';
+// ignore_for_file: prefer_const_constructors, must_be_immutable
 
 import 'package:area_51/business_logic/blocs/catalogBloc/catalog_bloc.dart';
 import 'package:area_51/constants/methods.dart';
@@ -33,31 +31,6 @@ class ProductPage extends StatefulWidget {
 class _ProductPageState extends State<ProductPage> {
 
   Methods methods = Methods();
-
-  void buyButtonMethod() {
-    bool productExists = false;
-    int productIndex = 0;
-    for (int i = 0; i < widget.user.cartProducts.cartProducts.length; i++) {
-      if (widget.product.productId ==
-          widget.user.cartProducts.cartProducts[i]['name'].productId) {
-        productExists = true;
-        productIndex = i;
-      }
-    }
-    DefaultTabController.of(context).animateTo(2);
-    if (!productExists) {
-      final Map addToCart = {
-        "name": widget.product,
-        "count": 1,
-      };
-      widget.user.cartProducts.cartProducts.add(addToCart);
-    } else {
-      widget.user.cartProducts.cartProducts[productIndex]['count'] =
-          widget.user.cartProducts.cartProducts[productIndex]['count'] + 1;
-    }
-    BlocProvider.of<CartBloc>(context).add(
-        AddToCartEvent(cartProducts: widget.user.cartProducts.cartProducts));
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -256,7 +229,7 @@ class _ProductPageState extends State<ProductPage> {
                                                           (context, state) {
                                                         return GestureDetector(
                                                           onTap: () =>
-                                                              buyButtonMethod(),
+                                                              methods.buyButtonMethod(widget.user, context, widget.product),
                                                           child: Container(
                                                               decoration: BoxDecoration(
                                                                   color: widget
