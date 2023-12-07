@@ -1,5 +1,4 @@
 import 'package:encrypt/encrypt.dart';  
-import 'package:crypto/crypto.dart';
 
 class EncryptData{
 //for AES Algorithms

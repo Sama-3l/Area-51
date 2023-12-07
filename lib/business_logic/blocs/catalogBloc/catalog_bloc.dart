@@ -9,7 +9,7 @@ part 'catalog_state.dart';
 class CatalogBloc extends Bloc<CatalogEvent, CatalogState> {
   CatalogBloc()
       : super(
-            CatalogStateInitial(Product(price: 999, name: "", description: ""))) {
+            CatalogStateInitial(Product(price: 999, name: "", description: "", productId: "000"))) {
     on<ShowCatalogEvent>((event, emit) {
       emit(ShowCatalogState(event.product));
     });

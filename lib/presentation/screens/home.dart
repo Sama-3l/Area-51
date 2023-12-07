@@ -1,9 +1,7 @@
-// ignore_for_file: prefer_const_constructors, curly_braces_in_flow_control_structures
+// ignore_for_file: prefer_const_constructors, curly_braces_in_flow_control_structures, must_be_immutable
 
 import 'package:area_51/constants/colors.dart';
-import 'package:area_51/data/models/product.dart';
 import 'package:area_51/presentation/widgets/homeWidgets/homeScreenLists.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
@@ -21,19 +19,10 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final ref = FirebaseFirestore.instance.collection('Products');
 
   @override
   void initState() {
     super.initState();
-    for (int i = 0; i < widget.products.productList.length; i++) {
-      final Product product = widget.products.productList[i];
-      ref.doc(product.name).set({
-        "name": product.name,
-        "price": product.price,
-        "description": product.description
-      });
-    }
   }
 
   @override

@@ -5,15 +5,10 @@ import 'dart:convert';
 import 'package:area_51/business_logic/blocs/catalogBloc/catalog_bloc.dart';
 import 'package:area_51/constants/methods.dart';
 import 'package:area_51/data/models/user.dart';
-import 'package:area_51/data/repositories/cart_Products.dart';
-import 'package:area_51/presentation/screens/cart.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:carbon_icons/carbon_icons.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:bloc/bloc.dart';
 
 import 'package:area_51/constants/colors.dart';
 
@@ -36,9 +31,33 @@ class ProductPage extends StatefulWidget {
 }
 
 class _ProductPageState extends State<ProductPage> {
-  final userData = FirebaseFirestore.instance.collection('Users');
 
   Methods methods = Methods();
+
+  void buyButtonMethod() {
+    bool productExists = false;
+    int productIndex = 0;
+    for (int i = 0; i < widget.user.cartProducts.cartProducts.length; i++) {
+      if (widget.product.productId ==
+          widget.user.cartProducts.cartProducts[i]['name'].productId) {
+        productExists = true;
+        productIndex = i;
+      }
+    }
+    DefaultTabController.of(context).animateTo(2);
+    if (!productExists) {
+      final Map addToCart = {
+        "name": widget.product,
+        "count": 1,
+      };
+      widget.user.cartProducts.cartProducts.add(addToCart);
+    } else {
+      widget.user.cartProducts.cartProducts[productIndex]['count'] =
+          widget.user.cartProducts.cartProducts[productIndex]['count'] + 1;
+    }
+    BlocProvider.of<CartBloc>(context).add(
+        AddToCartEvent(cartProducts: widget.user.cartProducts.cartProducts));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -236,45 +255,8 @@ class _ProductPageState extends State<ProductPage> {
                                                       builder:
                                                           (context, state) {
                                                         return GestureDetector(
-                                                          onTap: () {
-                                                            DefaultTabController
-                                                                    .of(context)
-                                                                .animateTo(2);
-                                                            final Map
-                                                                addToCart = {
-                                                              "name": widget
-                                                                  .product,
-                                                              "count": 1,
-                                                            };
-                                                            widget
-                                                                .user
-                                                                .cartProducts
-                                                                .cartProducts
-                                                                .add(addToCart);
-                                                            final userData =
-                                                                FirebaseFirestore
-                                                                    .instance
-                                                                    .collection(
-                                                                        'Users')
-                                                                    .doc(widget
-                                                                        .user
-                                                                        .username);
-                                                            userData.update({
-                                                              'cart': methods
-                                                                  .cartEntry(widget
-                                                                      .user
-                                                                      .cartProducts
-                                                                      .cartProducts)
-                                                            });
-                                                            BlocProvider.of<
-                                                                        CartBloc>(
-                                                                    context)
-                                                                .add(AddToCartEvent(
-                                                                    cartProducts: widget
-                                                                        .user
-                                                                        .cartProducts
-                                                                        .cartProducts));
-                                                          },
+                                                          onTap: () =>
+                                                              buyButtonMethod(),
                                                           child: Container(
                                                               decoration: BoxDecoration(
                                                                   color: widget

@@ -1,22 +1,15 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, must_be_immutable
 
-import 'dart:math';
-
 import 'package:area_51/data/models/user.dart';
-import 'package:area_51/data/repositories/cart_Products.dart';
 import 'package:area_51/data/repositories/products_Repo.dart';
-import 'package:area_51/presentation/pages/productPage.dart';
-import 'package:area_51/presentation/pages/login.dart';
 import 'package:carbon_icons/carbon_icons.dart';
 import 'package:flutter/material.dart';
 import '../../../business_logic/cubits/themeCubit/theme_cubit.dart';
 import '../../screens/home.dart';
-import '../../screens/search.dart';
 import '../../screens/cart.dart';
 import '../../screens/account.dart';
 import '../../pages/catalog.dart';
 import 'package:area_51/constants/colors.dart';
-import 'package:area_51/constants/dimensions.dart';
 
 class BottomNavBar extends StatefulWidget {
   BottomNavBar({super.key, required this.state, required this.theme});

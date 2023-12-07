@@ -1,12 +1,8 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables
-
-import 'dart:convert';
+// ignore_for_file: prefer_const_literals_to_create_immutables, must_be_immutable
 
 import 'package:area_51/business_logic/blocs/cartBloc/cart_bloc.dart';
 import 'package:area_51/constants/methods.dart';
 import 'package:area_51/data/models/user.dart';
-import 'package:area_51/data/repositories/cart_Products.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -30,18 +26,11 @@ class CartButtons extends StatelessWidget {
   int productCartIndex;
   CurrentUser user;
 
-  final userData = FirebaseFirestore.instance.collection('Users');
   Methods methods = Methods();
 
   void increment(BuildContext context) async {
     user.cartProducts.cartProducts[productCartIndex]['count'] =
         user.cartProducts.cartProducts[productCartIndex]['count'] + 1;
-
-    final userData =
-        FirebaseFirestore.instance.collection('Users').doc(user.username);
-    userData
-        .update({'cart': methods.cartEntry(user.cartProducts.cartProducts)});
-
   }
 
   void decrement(BuildContext context) {
@@ -50,15 +39,10 @@ class CartButtons extends StatelessWidget {
     if (user.cartProducts.cartProducts[productCartIndex]['count'] == 0) {
       user.cartProducts.cartProducts.removeAt(productCartIndex);
     }
-    final userData =
-        FirebaseFirestore.instance.collection('Users').doc(user.username);
     if (user.cartProducts.cartProducts.isEmpty) {
-      userData.update({'cart': null});
       BlocProvider.of<CartBloc>(context)
           .add(RemoveFromCartEvent(cartProducts: []));
     } else {
-      userData
-          .update({'cart': methods.cartEntry(user.cartProducts.cartProducts)});
       BlocProvider.of<CartBloc>(context)
           .add(AddToCartEvent(cartProducts: user.cartProducts.cartProducts));
     }

@@ -1,12 +1,12 @@
 import 'package:area_51/data/models/product.dart';
-import 'package:flutter/material.dart';
 
 class Methods {
-  Map encode(Product product) {
+  Map<String, dynamic> encode(Product product) {
     return {
       'name': product.name,
       'description': product.description,
-      'price': product.price
+      'price': product.price,
+      'id': product.productId
     };
   }
 
@@ -26,8 +26,9 @@ class Methods {
       'name': Product(
           price: product['name']['price'],
           description: product['name']['description'],
-          name: product['name']['name']),
-      'count': product['count']
+          name: product['name']['name'],
+          productId: product['name']['id']),
+      'count': product['count'],
     };
   }
 }

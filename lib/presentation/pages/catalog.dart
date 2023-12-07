@@ -1,8 +1,6 @@
-// ignore_for_file: prefer_const_constructors, curly_braces_in_flow_control_structures
+// ignore_for_file: prefer_const_constructors, curly_braces_in_flow_control_structures, must_be_immutable
 
 import 'package:area_51/business_logic/blocs/catalogBloc/catalog_bloc.dart';
-import 'package:area_51/business_logic/cubits/themeCubit/theme_cubit.dart';
-import 'package:area_51/data/models/product.dart';
 import 'package:area_51/data/models/user.dart';
 import 'package:area_51/data/repositories/cart_Products.dart';
 import 'package:area_51/presentation/pages/productPage.dart';
@@ -15,7 +13,7 @@ import '../../data/repositories/products_Repo.dart';
 import '../widgets/products/homePageProductItem.dart';
 
 class Catalog extends StatefulWidget {
-    Catalog(
+  Catalog(
       {super.key,
       required this.theme,
       required this.catalogProducts,
@@ -122,7 +120,10 @@ class CatalogListing extends StatelessWidget {
                               product: catalogProducts.productList[index],
                             ));
                   }), childCount: catalogProducts.productList.length)),
-            )
+            ),
+            SliverToBoxAdapter(
+                child:
+                    SizedBox(height: MediaQuery.of(context).size.width / 4.37))
           ],
         ));
   }

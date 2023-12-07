@@ -4,7 +4,6 @@ import 'package:area_51/business_logic/cubits/themeCubit/theme_cubit.dart';
 import 'package:area_51/constants/colors.dart';
 import 'package:area_51/data/models/user.dart';
 import 'package:carbon_icons/carbon_icons.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -75,17 +74,6 @@ class _AccountState extends State<Account> {
                       child: ElevatedButton(
                           onPressed: () {
                             BlocProvider.of<ThemeCubit>(context).changeTheme();
-                            final ref =
-                                FirebaseFirestore.instance.collection('Users');
-                            if (widget.theme.runtimeType == DarkMode) {
-                              ref
-                                  .doc(widget.user.username)
-                                  .update({'theme': 'Light'});
-                            } else {
-                              ref
-                                  .doc(widget.user.username)
-                                  .update({'theme': 'Dark'});
-                            }
                           },
                           style: ElevatedButton.styleFrom(
                               elevation: 0,

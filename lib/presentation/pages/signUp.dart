@@ -4,12 +4,9 @@ import 'package:area_51/data/repositories/cart_Products.dart';
 import 'package:area_51/data/repositories/wishlist_products.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:carbon_icons/carbon_icons.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import '../../alogrithms/aes.dart';
 import '../../business_logic/cubits/themeCubit/theme_cubit.dart';
 import '../../constants/colors.dart';
 import '../../constants/methods.dart';
@@ -29,7 +26,6 @@ class _SignUpState extends State<SignUp> {
   LightMode theme = DarkMode();
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
-  final users = FirebaseFirestore.instance.collection('Users');
   late CurrentUser user;
   Methods methods = Methods();
 
@@ -151,62 +147,13 @@ class _SignUpState extends State<SignUp> {
                                       heightFactor: 1,
                                       child: GestureDetector(
                                         onTap: () async {
-                                          bool exists = false;
-                                          int indexOfUser = 0;
-                                          final ref = await FirebaseFirestore
-                                              .instance
-                                              .collection('Users')
-                                              .get();
-                                          for (int i = 0; i < ref.size; i++) {
-                                            if (ref.docs.elementAt(i)['name'] ==
-                                                username.text) {
-                                              exists = true;
-                                              indexOfUser = i;
-                                            }
-                                          }
-                                          print(exists);
-                                          if (!exists) {
-                                            if (theme.runtimeType == DarkMode) {
-                                              users.doc(username.text).set({
-                                                'name': username.text,
-                                                'password':
-                                                    EncryptData.encryptAES(
-                                                        password.text),
-                                                'cart': null,
-                                                'wishlist': null,
-                                                'theme': 'Dark'
-                                              });
-                                            } else {
-                                              users.doc(username.text).set({
-                                                'name': username.text,
-                                                'password':
-                                                    EncryptData.encryptAES(
-                                                        password.text),
-                                                'cart': null,
-                                                'wishlist': null,
-                                                'theme': 'Light'
-                                              });
-                                            }
                                             CartProducts cartProducts =
                                                 CartProducts();
                                             WishlistProducts wishlistProducts =
                                                 WishlistProducts();
-                                            final refAfterAddition =
-                                                await FirebaseFirestore.instance
-                                                    .collection('Users')
-                                                    .get();
-                                            for (int i = 0; i < refAfterAddition.size; i++) {
-                                              if (refAfterAddition.docs
-                                                      .elementAt(i)['name'] ==
-                                                  username.text) {
-                                                indexOfUser = i;
-                                              }
-                                            }
-                                            print(indexOfUser);
                                             user = CurrentUser(
                                                 cartProducts: cartProducts,
-                                                username: ref.docs.elementAt(
-                                                    indexOfUser)['name'],
+                                                username: username.text,
                                                 wishListProducts:
                                                     wishlistProducts,
                                                 theme: theme);
@@ -218,9 +165,6 @@ class _SignUpState extends State<SignUp> {
                                                                 theme: theme,
                                                                 currentUser:
                                                                     user)));
-                                          } else {
-                                            print('Already Exists');
-                                          }
                                         },
                                         child: Container(
                                             decoration: BoxDecoration(

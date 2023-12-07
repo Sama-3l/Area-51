@@ -8,7 +8,6 @@ import '../../business_logic/blocs/catalogBloc/catalog_bloc.dart';
 import '../../business_logic/cubits/themeCubit/theme_cubit.dart';
 import '../../constants/colors.dart';
 import '../../data/models/user.dart';
-import '../../data/repositories/cart_Products.dart';
 import '../widgets/appNavigation/bottomNavBar.dart';
 
 class MyApp extends StatelessWidget {

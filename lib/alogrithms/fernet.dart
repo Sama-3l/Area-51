@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:crypto/crypto.dart';
 import 'package:encrypt/encrypt.dart';
 
 class FernetEncryptedData {
@@ -9,7 +8,6 @@ class FernetEncryptedData {
   static var fernetDecrypted;
   static encryptFernet(plainText) {
     final key = Key.fromUtf8('my32lengthsupersecretnooneknows1');
-    final iv = IV.fromLength(16);
     final b64key = Key.fromUtf8(base64Url.encode(key.bytes));
     final fernet = Fernet(b64key);
     final encrypter = Encrypter(fernet);
@@ -20,7 +18,6 @@ class FernetEncryptedData {
 
   static decryptFernet(plainText) {
     final key = Key.fromUtf8('my32lengthsupersecretnooneknows1');
-    final iv = IV.fromLength(16);
     final b64key = Key.fromUtf8(base64Url.encode(key.bytes));
     final fernet = Fernet(b64key);
     final encrypter = Encrypter(fernet);

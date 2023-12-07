@@ -2,7 +2,6 @@
 
 import 'package:area_51/constants/colors.dart';
 import 'package:area_51/data/models/user.dart';
-import 'package:area_51/data/repositories/cart_Products.dart';
 import 'package:area_51/presentation/widgets/cartWidgets/cartOut.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';

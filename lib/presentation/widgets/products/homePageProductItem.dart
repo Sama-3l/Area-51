@@ -1,7 +1,7 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:area_51/business_logic/blocs/catalogBloc/catalog_bloc.dart';
 import 'package:area_51/constants/colors.dart';
-import 'package:area_51/presentation/pages/productPage.dart';
-import 'package:area_51/presentation/screens/cart.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -69,7 +69,7 @@ class ProductListing extends StatelessWidget {
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.only(right: 13, bottom: 10),
+            padding: const EdgeInsets.only(right: 10, bottom: 10),
             child: Container(
                 decoration: BoxDecoration(
                     color: theme.productAccent,

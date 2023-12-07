@@ -9,7 +9,7 @@ class Product {
   final String description;
   // // final Image thumbnail;
   // // final List<Image> products;
-  // final String productId;
+  final String productId;
 
   // final int impression;
   // final int clicks;
@@ -25,7 +25,7 @@ class Product {
       required this.description,
       // // required this.thumbnail,
       // // required this.products,
-      // required this.productId,
+      required this.productId,
       // required this.impression,
       // required this.clicks,
       // required this.addToCarts,

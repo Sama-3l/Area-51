@@ -1,24 +1,14 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously, must_be_immutable, prefer_const_constructors_in_immutables
 
 import 'package:area_51/constants/colors.dart';
 import 'package:area_51/constants/methods.dart';
 import 'package:area_51/data/repositories/cart_Products.dart';
 import 'package:area_51/data/repositories/wishlist_products.dart';
-import 'package:area_51/main.dart';
 import 'package:area_51/presentation/screens/mainApp.dart';
 import 'package:area_51/presentation/widgets/login/InputField.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:carbon_icons/carbon_icons.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:area_51/alogrithms/aes.dart';
-
-import '../../business_logic/cubits/themeCubit/theme_cubit.dart';
-import '../../data/models/product.dart';
 import '../../data/models/user.dart';
 import 'signUp.dart';
 
@@ -37,6 +27,7 @@ class _LogInState extends State<LogIn> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: LogInForm(),
     );
   }
@@ -48,7 +39,6 @@ class LogInForm extends StatelessWidget {
   final LightMode theme = DarkMode();
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
-  final users = FirebaseFirestore.instance.collection('Users');
   late CurrentUser user;
   Methods methods = Methods();
 
@@ -107,83 +97,13 @@ class LogInForm extends StatelessWidget {
                               heightFactor: 1,
                               child: GestureDetector(
                                 onTap: () async {
-                                  bool exists = false;
-                                  int indexOfUser = 0;
-                                  final ref = await FirebaseFirestore.instance
-                                      .collection('Users')
-                                      .get();
-                                  for (int i = 0; i < ref.size; i++) {
-                                    if (ref.docs.elementAt(i)['name'] ==
-                                        username.text) {
-                                      exists = true;
-                                      indexOfUser = i;
-                                    }
-                                  }
-                                  if (!exists) {
-                                    Navigator.of(context).pushReplacement(
-                                        MaterialPageRoute(
-                                            builder: (context) => SignUp()));
-                                  } else {
                                     CartProducts cart = CartProducts();
                                     WishlistProducts wishlist =
                                         WishlistProducts();
-                                    LightMode appTheme = LightMode();
-                                    if (ref.docs.elementAt(
-                                                indexOfUser)['password'] ==
-                                            EncryptData.encryptAES(
-                                                password.text) &&
-                                        ref.docs.elementAt(
-                                                indexOfUser)['name'] ==
-                                            username.text) {
-                                      if (ref.docs
-                                              .elementAt(indexOfUser)['cart'] !=
-                                          null) {
-                                        List<Map> tempList = [];
-                                        for (int i = 0;
-                                            i <
-                                                ref.docs
-                                                    .elementAt(
-                                                        indexOfUser)['cart']
-                                                    .length;
-                                            i++) {
-                                          tempList.add(methods.initializeObject(
-                                              ref.docs.elementAt(
-                                                  indexOfUser)['cart'][i]));
-                                        }
-                                        cart.cartProducts = tempList;
-                                      }
-                                      if (ref.docs.elementAt(
-                                              indexOfUser)['wishlist'] !=
-                                          null) {
-                                        List<Map> tempList = [];
-                                        for (int i = 0;
-                                            i <
-                                                ref.docs
-                                                    .elementAt(
-                                                        indexOfUser)['cart']
-                                                    .length;
-                                            i++) {
-                                          tempList.add(methods.initializeObject(
-                                              ref.docs.elementAt(
-                                                  indexOfUser)['wishlist'][i]));
-                                        }
-                                        wishlist.wishlist = tempList;
-                                      }
-                                      if (ref.docs.elementAt(
-                                              indexOfUser)['theme'] !=
-                                          null) {
-                                        if (ref.docs.elementAt(
-                                                indexOfUser)['theme'] ==
-                                            'Light') {
-                                          appTheme = LightMode();
-                                        } else {
-                                          appTheme = DarkMode();
-                                        }
-                                      }
+                                    LightMode appTheme = DarkMode();
                                       user = CurrentUser(
                                           cartProducts: cart,
-                                          username: ref.docs
-                                              .elementAt(indexOfUser)['name'],
+                                          username: username.text,
                                           wishListProducts: wishlist,
                                           theme: appTheme);
                                       Navigator.of(context).pushReplacement(
@@ -191,8 +111,6 @@ class LogInForm extends StatelessWidget {
                                               builder: (context) => MyApp(
                                                   theme: appTheme,
                                                   currentUser: user)));
-                                    }
-                                  }
                                 },
                                 child: Container(
                                     decoration: BoxDecoration(
