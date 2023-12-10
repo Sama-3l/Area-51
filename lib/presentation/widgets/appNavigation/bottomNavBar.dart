@@ -26,11 +26,11 @@ class _BottomNavBarState extends State<BottomNavBar> {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-          left: MediaQuery.of(context).size.width * 0.1,
-          right: MediaQuery.of(context).size.width * 0.1,
+          left: MediaQuery.of(context).size.width * 0.11,
+          right: MediaQuery.of(context).size.width * 0.11,
           bottom: MediaQuery.of(context).size.height * 0.065),
       child: AspectRatio(
-        aspectRatio: MediaQuery.of(context).size.width * 0.75 / 80,
+        aspectRatio: MediaQuery.of(context).size.width * 0.9 / 80,
         child: Padding(
             padding: EdgeInsets.only(bottom: 17, left: 7, right: 7),
             child: Container(
@@ -43,10 +43,10 @@ class _BottomNavBarState extends State<BottomNavBar> {
                         widget.theme.mainAccent.withOpacity(0.5),
                     indicator: BoxDecoration(),
                     tabs: [
-                      Tab(icon: Icon(CarbonIcons.home, size: 30)),
-                      Tab(icon: Icon(CarbonIcons.search, size: 30)),
-                      Tab(icon: Icon(CarbonIcons.shopping_bag, size: 30)),
-                      Tab(icon: Icon(CarbonIcons.user_avatar, size: 30)),
+                      Tab(icon: Icon(CarbonIcons.home)),
+                      Tab(icon: Icon(CarbonIcons.search)),
+                      Tab(icon: Icon(CarbonIcons.shopping_bag)),
+                      Tab(icon: Icon(CarbonIcons.user_avatar)),
                     ]))),
       ),
     );
