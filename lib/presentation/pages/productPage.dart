@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, must_be_immutable
+// ignore_for_file: prefer_const_constructors, must_be_immutable, prefer_const_literals_to_create_immutables
 
 import 'package:area_51/business_logic/blocs/catalogBloc/catalog_bloc.dart';
 import 'package:area_51/constants/methods.dart';
@@ -12,6 +12,7 @@ import 'package:area_51/constants/colors.dart';
 
 import '../../business_logic/blocs/cartBloc/cart_bloc.dart';
 import '../../data/models/product.dart';
+import '../../constants/constants.dart';
 
 class ProductPage extends StatefulWidget {
   ProductPage(
@@ -35,259 +36,233 @@ class _ProductPageState extends State<ProductPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: widget.theme.mainAccent,
-      body: Column(children: [
-        Padding(
-          padding: EdgeInsets.only(top: 10, bottom: 10),
-          child: AspectRatio(
-              aspectRatio: 5,
-              child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Text("Area 51",
-                      style: GoogleFonts.poppins(
-                          fontSize: 31,
-                          color: widget.theme.oppAccent,
-                          fontWeight: FontWeight.w500,
-                          fontStyle: FontStyle.italic)))),
-        ),
-        Expanded(
-            child: Padding(
-          padding: const EdgeInsets.only(left: 10, right: 10),
-          child: Container(
-              // margin: EdgeInsetsDirectional.only(start: 2, end: 2, bottom: 30),
-              decoration: BoxDecoration(
-                border: Border(
-                  top: BorderSide(width: 2, color: widget.theme.oppAccent),
-                  bottom: BorderSide(width: 0, color: widget.theme.oppAccent),
-                  left: BorderSide(width: 2, color: widget.theme.oppAccent),
-                  right: BorderSide(width: 2, color: widget.theme.oppAccent),
-                ),
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(40),
-                  topRight: Radius.circular(40),
-                ),
-              ),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20),
-                    child: Row(
+      body: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.only(top: 10, bottom: 10),
+            child: AspectRatio(
+                aspectRatio: 5,
+                child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Text("Area 51",
+                        style: GoogleFonts.poppins(
+                            fontSize: 31,
+                            color: widget.theme.oppAccent,
+                            fontWeight: FontWeight.w500,
+                            fontStyle: FontStyle.italic)))),
+          ),
+          Expanded(
+              child: Stack(
+            children: [
+              Padding(
+                  padding: productPagePadding,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border(
+                        top: BorderSide(
+                            width: 1.5, color: widget.theme.oppAccent),
+                        bottom:
+                            BorderSide(width: 0, color: widget.theme.oppAccent),
+                        left: BorderSide(
+                            width: 1.5, color: widget.theme.oppAccent),
+                        right: BorderSide(
+                            width: 1.5, color: widget.theme.oppAccent),
+                      ),
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(40),
+                        topRight: Radius.circular(40),
+                      ),
+                    ),
+                    child: Column(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(left: 18),
-                          child: IconButton(
-                              onPressed: () {
-                                BlocProvider.of<CatalogBloc>(context)
-                                    .add(ShowCatalogEvent(widget.product));
-                              },
-                              padding: EdgeInsets.zero,
-                              icon: Icon(Icons.arrow_back_ios_new_rounded,
-                                  size: 39, color: widget.theme.oppAccent)),
+                          padding: const EdgeInsets.only(top: 15),
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 18),
+                                child: IconButton(
+                                    onPressed: () {
+                                      BlocProvider.of<CatalogBloc>(context).add(
+                                          ShowCatalogEvent(widget.product));
+                                    },
+                                    padding: EdgeInsets.zero,
+                                    icon: Icon(Icons.arrow_back_ios_new_rounded,
+                                        size: 39,
+                                        color: widget.theme.oppAccent)),
+                              ),
+                              Spacer(flex: 3),
+                              Text("Laptops",
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 25,
+                                      color: widget.theme.oppAccent,
+                                      fontWeight: FontWeight.w500)),
+                              Spacer(flex: 5)
+                            ],
+                          ),
                         ),
-                        Spacer(flex: 3),
-                        Text("Laptops",
-                            style: GoogleFonts.poppins(
-                                fontSize: 25,
-                                color: widget.theme.oppAccent,
-                                fontWeight: FontWeight.w500)),
-                        Spacer(flex: 5)
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Stack(
-                      children: [
-                        ListView(
+                        Expanded(
+                            child: ListView(
                           children: [
-                            LayoutBuilder(builder: ((context, constraints) {
-                              return SizedBox(
-                                height: 350,
-                                width: constraints.maxWidth,
-                                child: FractionallySizedBox(
-                                  widthFactor: 0.9,
-                                  heightFactor: 0.85,
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        color: widget.theme.productAccent,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(30))),
-                                  ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  left:
+                                      MediaQuery.of(context).size.width * 0.05,
+                                  right:
+                                      MediaQuery.of(context).size.width * 0.05),
+                              child: SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.3,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      color: widget.theme.productAccent,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(30))),
                                 ),
-                              );
-                            })),
-                            LayoutBuilder(builder: ((context, constraints) {
-                              return Center(
-                                  child: Column(children: [
-                                SizedBox(
-                                  width: constraints.maxWidth * 0.9,
-                                  child: AutoSizeText(
-                                    widget.product.name,
-                                    maxFontSize: 23,
-                                    minFontSize: 18,
-                                    maxLines: 2,
-                                    style: GoogleFonts.poppins(
-                                        color: widget.theme.oppAccent,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 23),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: constraints.maxWidth * 0.9,
-                                  child: AutoSizeText(
-                                    "\$${widget.product.price}",
-                                    maxFontSize: 18,
-                                    minFontSize: 13,
-                                    maxLines: 1,
-                                    style: GoogleFonts.poppins(
-                                        color: widget.theme.oppAccent
-                                            .withOpacity(0.5),
-                                        fontSize: 18),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 20),
-                                  child: SizedBox(
-                                    width: constraints.maxWidth * 0.9,
-                                    child: AutoSizeText(
-                                      widget.product.description,
-                                      minFontSize: 15,
-                                      maxLines: 6,
-                                      style: GoogleFonts.poppins(
-                                          color: widget.theme.oppAccent,
-                                          fontWeight: FontWeight.w300,
-                                          fontSize: 18),
-                                    ),
-                                  ),
-                                ),
-                              ]));
-                            })),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  left:
+                                      MediaQuery.of(context).size.width * 0.05,
+                                  right:
+                                      MediaQuery.of(context).size.width * 0.05,
+                                  top: 20),
+                              child: AutoSizeText(
+                                widget.product.name,
+                                minFontSize: 18,
+                                maxLines: 2,
+                                style: GoogleFonts.poppins(
+                                    color: widget.theme.oppAccent,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 23),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                left: MediaQuery.of(context).size.width * 0.05,
+                                right: MediaQuery.of(context).size.width * 0.05,
+                              ),
+                              child: AutoSizeText(
+                                "\$${widget.product.price}",
+                                minFontSize: 15,
+                                maxLines: 1,
+                                style: GoogleFonts.poppins(
+                                    color:
+                                        widget.theme.oppAccent.withOpacity(0.5),
+                                    fontSize: 21),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                left: MediaQuery.of(context).size.width * 0.05,
+                                right: MediaQuery.of(context).size.width * 0.05,
+                                top: 30
+                              ),
+                              child: AutoSizeText(
+                                widget.product.description,
+                                minFontSize: 15,
+                                style: GoogleFonts.poppins(
+                                    color: widget.theme.oppAccent,
+                                    fontWeight: FontWeight.w300,
+                                    fontSize: 18),
+                              ),
+                            ),
                           ],
-                        ),
-                        // LayoutBuilder(builder: ((context, constraints) {
-                        //   return Align(
-                        //       alignment: Alignment.bottomCenter,
-                        //       child: Material(
-                        //         elevation: 1,
-                        //         child: Container(
-                        //           height: constraints.maxHeight * 0.18,
-                        //           width: constraints.maxWidth,
-                        //           decoration: BoxDecoration(boxShadow: [
-                        //             BoxShadow(
-                        //                 color: widget.theme.oppAccent
-                        //                     .withOpacity(0.25),
-                        //                 offset: Offset(0, -7),
-                        //                 blurRadius: 20)
-                        //           ], color: widget.theme.mainAccent),
-                        //           child: Row(
-                        //               crossAxisAlignment:
-                        //                   CrossAxisAlignment.center,
-                        //               children: [
-                        //                 Align(
-                        //                   alignment: Alignment.topLeft,
-                        //                   child: FractionallySizedBox(
-                        //                     heightFactor: 0.6,
-                        //                     child: Padding(
-                        //                       padding: const EdgeInsets.only(
-                        //                           left: 25, top: 8),
-                        //                       child: Column(
-                        //                         crossAxisAlignment:
-                        //                             CrossAxisAlignment.start,
-                        //                         children: [
-                        //                           Text("Price",
-                        //                               style:
-                        //                                   GoogleFonts.poppins(
-                        //                                       fontSize: 15,
-                        //                                       fontWeight:
-                        //                                           FontWeight
-                        //                                               .bold,
-                        //                                       color: widget
-                        //                                           .theme
-                        //                                           .oppAccent
-                        //                                           .withOpacity(
-                        //                                               0.7))),
-                        //                           Text(
-                        //                               '\$${widget.product.price}',
-                        //                               style:
-                        //                                   GoogleFonts.poppins(
-                        //                                       fontSize: 18,
-                        //                                       fontWeight:
-                        //                                           FontWeight
-                        //                                               .bold,
-                        //                                       color: widget
-                        //                                           .theme
-                        //                                           .oppAccent))
-                        //                         ],
-                        //                       ),
-                        //                     ),
-                        //                   ),
-                        //                 ),
-                        //                 Expanded(
-                        //                   child: Align(
-                        //                       alignment: Alignment.topRight,
-                        //                       child: SizedBox(
-                        //                         child: LayoutBuilder(builder:
-                        //                             ((context, constraints) {
-                        //                           return Padding(
-                        //                             padding:
-                        //                                 const EdgeInsets.only(
-                        //                                     top: 20, right: 20),
-                        //                             child: BlocBuilder<CartBloc,
-                        //                                 CartState>(
-                        //                               builder:
-                        //                                   (context, state) {
-                        //                                 return GestureDetector(
-                        //                                   onTap: () => methods
-                        //                                       .buyButtonMethod(
-                        //                                           widget.user,
-                        //                                           context,
-                        //                                           widget
-                        //                                               .product),
-                        //                                   child: Container(
-                        //                                       decoration: BoxDecoration(
-                        //                                           color: widget
-                        //                                               .theme
-                        //                                               .oppAccent,
-                        //                                           borderRadius:
-                        //                                               BorderRadius.all(
-                        //                                                   Radius.circular(
-                        //                                                       60))),
-                        //                                       height: constraints
-                        //                                               .maxHeight *
-                        //                                           0.2,
-                        //                                       width: constraints
-                        //                                               .maxWidth *
-                        //                                           0.55,
-                        //                                       child: Center(
-                        //                                         child: Text(
-                        //                                           'Add to cart',
-                        //                                           style: GoogleFonts.poppins(
-                        //                                               fontSize:
-                        //                                                   10,
-                        //                                               color: widget
-                        //                                                   .theme
-                        //                                                   .mainAccent,
-                        //                                               fontWeight:
-                        //                                                   FontWeight
-                        //                                                       .w800),
-                        //                                         ),
-                        //                                       )),
-                        //                                 );
-                        //                               },
-                        //                             ),
-                        //                           );
-                        //                         })),
-                        //                       )),
-                        //                 ),
-                        //               ]),
-                        //         ),
-                        //       ));
-                        // })),
+                        ))
                       ],
                     ),
-                  ),
-                ],
-              )),
-        ))
-      ]),
+                  )),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Material(
+                    elevation: 1,
+                    child: Container(
+                        height: MediaQuery.of(context).size.height * 0.075,
+                        decoration: BoxDecoration(boxShadow: [
+                          BoxShadow(
+                              color: widget.theme.oppAccent.withOpacity(0.25),
+                              offset: Offset(0, -7),
+                              blurRadius: 20)
+                        ], color: widget.theme.mainAccent),
+                        child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 15, top: 8),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text("Price",
+                                              style: GoogleFonts.poppins(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: widget.theme.oppAccent
+                                                      .withOpacity(0.7))),
+                                          Text('\$${widget.product.price}',
+                                              style: GoogleFonts.poppins(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold,
+                                                  color:
+                                                      widget.theme.oppAccent))
+                                        ],
+                                      ))),
+                              Expanded(
+                                child: Align(
+                                    alignment: Alignment.centerRight,
+                                    child: BlocBuilder<CartBloc, CartState>(
+                                      builder: (context, state) {
+                                        return Padding(
+                                          padding: EdgeInsets.only(
+                                              top: 8, right: 15),
+                                          child: GestureDetector(
+                                            onTap: () =>
+                                                methods.buyButtonMethod(
+                                                    widget.user,
+                                                    context,
+                                                    widget.product),
+                                            child: Container(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.4,
+                                                height: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.1,
+                                                decoration: BoxDecoration(
+                                                    color:
+                                                        widget.theme.oppAccent,
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                60))),
+                                                child: Center(
+                                                  child: Text(
+                                                    'Add to cart',
+                                                    style: GoogleFonts.poppins(
+                                                        fontSize: 12,
+                                                        color: widget
+                                                            .theme.mainAccent,
+                                                        fontWeight:
+                                                            FontWeight.w700),
+                                                  ),
+                                                )),
+                                          ),
+                                        );
+                                      },
+                                    )),
+                              ),
+                            ]))),
+              )
+            ],
+          ))
+        ],
+      ),
     );
   }
 }
