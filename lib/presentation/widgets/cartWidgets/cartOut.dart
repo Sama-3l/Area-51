@@ -38,7 +38,7 @@ class _CartPaymentState extends State<CartPayment> {
           child: Material(
             elevation: 1,
             child: Container(
-              height: constraints.maxHeight * 0.2,
+              height: constraints.maxHeight * 0.075,
               width: constraints.maxWidth,
               padding: EdgeInsets.only(left: 10, right: 10),
               decoration: BoxDecoration(boxShadow: [
@@ -51,68 +51,62 @@ class _CartPaymentState extends State<CartPayment> {
                   Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
                 Align(
                   alignment: Alignment.topLeft,
-                  child: FractionallySizedBox(
-                    heightFactor: 0.6,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 25, top: 8),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Price",
-                              style: GoogleFonts.poppins(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                  color:
-                                      widget.theme.oppAccent.withOpacity(0.7))),
-                          Text('\$${price.toStringAsFixed(2)}',
-                              style: GoogleFonts.poppins(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: widget.theme.oppAccent))
-                        ],
-                      ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 15, top: 8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Price",
+                            style: GoogleFonts.poppins(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                color:
+                                    widget.theme.oppAccent.withOpacity(0.7))),
+                        Text('\$${price.toStringAsFixed(2)}',
+                            style: GoogleFonts.poppins(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: widget.theme.oppAccent))
+                      ],
                     ),
                   ),
                 ),
                 Expanded(
                   child: Align(
-                      alignment: Alignment.topRight,
-                      child: SizedBox(
-                        child: LayoutBuilder(builder: ((context, constraints) {
-                          return Padding(
-                            padding: const EdgeInsets.only(top: 20, right: 20),
-                            child: GestureDetector(
-                              onTap: () {},
-                              child: Container(
-                                  decoration: BoxDecoration(
-                                      color: widget.theme.oppAccent,
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(60))),
-                                  height: constraints.maxHeight * 0.2,
-                                  width: constraints.maxWidth * 0.55,
-                                  child: Center(
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 7),
-                                          child: Text(
-                                            'Payment Options',
-                                            style: GoogleFonts.poppins(
-                                                fontSize: 10,
-                                                color: widget.theme.mainAccent,
-                                                fontWeight: FontWeight.w800),
-                                          ),
+                      alignment: Alignment.centerRight,
+                      child: LayoutBuilder(builder: ((context, constraints) {
+                        return Padding(
+                          padding: const EdgeInsets.only(top: 8, right: 15),
+                          child: GestureDetector(
+                            onTap: () {},
+                            child: Container(
+                                width: MediaQuery.of(context).size.width * 0.4,
+                                height: MediaQuery.of(context).size.width * 0.1,
+                                decoration: BoxDecoration(
+                                    color: widget.theme.oppAccent,
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(60))),
+                                child: Center(
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 7),
+                                        child: Text(
+                                          'Payment Options',
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 10,
+                                              color: widget.theme.mainAccent,
+                                              fontWeight: FontWeight.w800),
                                         ),
-                                        Iconify(forward),
-                                      ],
-                                    ),
-                                  )),
-                            ),
-                          );
-                        })),
-                      )),
+                                      ),
+                                      Iconify(forward),
+                                    ],
+                                  ),
+                                )),
+                          ),
+                        );
+                      }))),
                 ),
               ]),
             ),

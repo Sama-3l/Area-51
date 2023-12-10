@@ -24,25 +24,31 @@ class BottomNavBar extends StatefulWidget {
 class _BottomNavBarState extends State<BottomNavBar> {
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 350 / 80,
-      child: Padding(
-          padding: EdgeInsets.only(bottom: 17, left: 7, right: 7),
-          child: Container(
-              decoration: BoxDecoration(
-                  color: widget.theme.oppAccent,
-                  borderRadius: BorderRadius.all(Radius.circular(50))),
-              child: TabBar(
-                  labelColor: widget.theme.mainAccent,
-                  unselectedLabelColor:
-                      widget.theme.mainAccent.withOpacity(0.5),
-                  indicator: BoxDecoration(),
-                  tabs: [
-                    Tab(icon: Icon(CarbonIcons.home, size: 30)),
-                    Tab(icon: Icon(CarbonIcons.search, size: 30)),
-                    Tab(icon: Icon(CarbonIcons.shopping_bag, size: 30)),
-                    Tab(icon: Icon(CarbonIcons.user_avatar, size: 30)),
-                  ]))),
+    return Padding(
+      padding: EdgeInsets.only(
+          left: MediaQuery.of(context).size.width * 0.1,
+          right: MediaQuery.of(context).size.width * 0.1,
+          bottom: MediaQuery.of(context).size.height * 0.065),
+      child: AspectRatio(
+        aspectRatio: MediaQuery.of(context).size.width * 0.75 / 80,
+        child: Padding(
+            padding: EdgeInsets.only(bottom: 17, left: 7, right: 7),
+            child: Container(
+                decoration: BoxDecoration(
+                    color: widget.theme.oppAccent,
+                    borderRadius: BorderRadius.all(Radius.circular(50))),
+                child: TabBar(
+                    labelColor: widget.theme.mainAccent,
+                    unselectedLabelColor:
+                        widget.theme.mainAccent.withOpacity(0.5),
+                    indicator: BoxDecoration(),
+                    tabs: [
+                      Tab(icon: Icon(CarbonIcons.home, size: 30)),
+                      Tab(icon: Icon(CarbonIcons.search, size: 30)),
+                      Tab(icon: Icon(CarbonIcons.shopping_bag, size: 30)),
+                      Tab(icon: Icon(CarbonIcons.user_avatar, size: 30)),
+                    ]))),
+      ),
     );
   }
 }

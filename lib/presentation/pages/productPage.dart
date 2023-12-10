@@ -29,7 +29,6 @@ class ProductPage extends StatefulWidget {
 }
 
 class _ProductPageState extends State<ProductPage> {
-
   Methods methods = Methods();
 
   @override
@@ -37,26 +36,35 @@ class _ProductPageState extends State<ProductPage> {
     return Scaffold(
       backgroundColor: widget.theme.mainAccent,
       body: Column(children: [
-        AspectRatio(
-            aspectRatio: 5,
-            child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Text("Area 51",
-                    style: GoogleFonts.poppins(
-                        fontSize: 31,
-                        color: widget.theme.oppAccent,
-                        fontWeight: FontWeight.w500,
-                        fontStyle: FontStyle.italic)))),
+        Padding(
+          padding: EdgeInsets.only(top: 10, bottom: 10),
+          child: AspectRatio(
+              aspectRatio: 5,
+              child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Text("Area 51",
+                      style: GoogleFonts.poppins(
+                          fontSize: 31,
+                          color: widget.theme.oppAccent,
+                          fontWeight: FontWeight.w500,
+                          fontStyle: FontStyle.italic)))),
+        ),
         Expanded(
             child: Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20),
+          padding: const EdgeInsets.only(left: 10, right: 10),
           child: Container(
-              margin: EdgeInsetsDirectional.only(start: 2, end: 2, bottom: 30),
+              // margin: EdgeInsetsDirectional.only(start: 2, end: 2, bottom: 30),
               decoration: BoxDecoration(
-                border: Border.all(color: widget.theme.oppAccent, width: 3),
+                border: Border(
+                  top: BorderSide(width: 2, color: widget.theme.oppAccent),
+                  bottom: BorderSide(width: 0, color: widget.theme.oppAccent),
+                  left: BorderSide(width: 2, color: widget.theme.oppAccent),
+                  right: BorderSide(width: 2, color: widget.theme.oppAccent),
+                ),
                 borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(50),
-                    topRight: Radius.circular(50)),
+                  topLeft: Radius.circular(40),
+                  topRight: Radius.circular(40),
+                ),
               ),
               child: Column(
                 children: [
@@ -141,8 +149,7 @@ class _ProductPageState extends State<ProductPage> {
                                     width: constraints.maxWidth * 0.9,
                                     child: AutoSizeText(
                                       widget.product.description,
-                                      maxFontSize: 15,
-                                      minFontSize: 10,
+                                      minFontSize: 15,
                                       maxLines: 6,
                                       style: GoogleFonts.poppins(
                                           color: widget.theme.oppAccent,
@@ -155,121 +162,125 @@ class _ProductPageState extends State<ProductPage> {
                             })),
                           ],
                         ),
-                        LayoutBuilder(builder: ((context, constraints) {
-                          return Align(
-                              alignment: Alignment.bottomCenter,
-                              child: Material(
-                                elevation: 1,
-                                child: Container(
-                                  height: constraints.maxHeight * 0.18,
-                                  width: constraints.maxWidth,
-                                  decoration: BoxDecoration(boxShadow: [
-                                    BoxShadow(
-                                        color: widget.theme.oppAccent
-                                            .withOpacity(0.25),
-                                        offset: Offset(0, -7),
-                                        blurRadius: 20)
-                                  ], color: widget.theme.mainAccent),
-                                  child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Align(
-                                          alignment: Alignment.topLeft,
-                                          child: FractionallySizedBox(
-                                            heightFactor: 0.6,
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 25, top: 8),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text("Price",
-                                                      style:
-                                                          GoogleFonts.poppins(
-                                                              fontSize: 15,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              color: widget
-                                                                  .theme
-                                                                  .oppAccent
-                                                                  .withOpacity(
-                                                                      0.7))),
-                                                  Text(
-                                                      '\$${widget.product.price}',
-                                                      style:
-                                                          GoogleFonts.poppins(
-                                                              fontSize: 18,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              color: widget
-                                                                  .theme
-                                                                  .oppAccent))
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Align(
-                                              alignment: Alignment.topRight,
-                                              child: SizedBox(
-                                                child: LayoutBuilder(builder:
-                                                    ((context, constraints) {
-                                                  return Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            top: 20, right: 20),
-                                                    child: BlocBuilder<CartBloc,
-                                                        CartState>(
-                                                      builder:
-                                                          (context, state) {
-                                                        return GestureDetector(
-                                                          onTap: () =>
-                                                              methods.buyButtonMethod(widget.user, context, widget.product),
-                                                          child: Container(
-                                                              decoration: BoxDecoration(
-                                                                  color: widget
-                                                                      .theme
-                                                                      .oppAccent,
-                                                                  borderRadius:
-                                                                      BorderRadius.all(
-                                                                          Radius.circular(
-                                                                              60))),
-                                                              height: constraints
-                                                                      .maxHeight *
-                                                                  0.2,
-                                                              width: constraints
-                                                                      .maxWidth *
-                                                                  0.55,
-                                                              child: Center(
-                                                                child: Text(
-                                                                  'Add to cart',
-                                                                  style: GoogleFonts.poppins(
-                                                                      fontSize:
-                                                                          10,
-                                                                      color: widget
-                                                                          .theme
-                                                                          .mainAccent,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w800),
-                                                                ),
-                                                              )),
-                                                        );
-                                                      },
-                                                    ),
-                                                  );
-                                                })),
-                                              )),
-                                        ),
-                                      ]),
-                                ),
-                              ));
-                        })),
+                        // LayoutBuilder(builder: ((context, constraints) {
+                        //   return Align(
+                        //       alignment: Alignment.bottomCenter,
+                        //       child: Material(
+                        //         elevation: 1,
+                        //         child: Container(
+                        //           height: constraints.maxHeight * 0.18,
+                        //           width: constraints.maxWidth,
+                        //           decoration: BoxDecoration(boxShadow: [
+                        //             BoxShadow(
+                        //                 color: widget.theme.oppAccent
+                        //                     .withOpacity(0.25),
+                        //                 offset: Offset(0, -7),
+                        //                 blurRadius: 20)
+                        //           ], color: widget.theme.mainAccent),
+                        //           child: Row(
+                        //               crossAxisAlignment:
+                        //                   CrossAxisAlignment.center,
+                        //               children: [
+                        //                 Align(
+                        //                   alignment: Alignment.topLeft,
+                        //                   child: FractionallySizedBox(
+                        //                     heightFactor: 0.6,
+                        //                     child: Padding(
+                        //                       padding: const EdgeInsets.only(
+                        //                           left: 25, top: 8),
+                        //                       child: Column(
+                        //                         crossAxisAlignment:
+                        //                             CrossAxisAlignment.start,
+                        //                         children: [
+                        //                           Text("Price",
+                        //                               style:
+                        //                                   GoogleFonts.poppins(
+                        //                                       fontSize: 15,
+                        //                                       fontWeight:
+                        //                                           FontWeight
+                        //                                               .bold,
+                        //                                       color: widget
+                        //                                           .theme
+                        //                                           .oppAccent
+                        //                                           .withOpacity(
+                        //                                               0.7))),
+                        //                           Text(
+                        //                               '\$${widget.product.price}',
+                        //                               style:
+                        //                                   GoogleFonts.poppins(
+                        //                                       fontSize: 18,
+                        //                                       fontWeight:
+                        //                                           FontWeight
+                        //                                               .bold,
+                        //                                       color: widget
+                        //                                           .theme
+                        //                                           .oppAccent))
+                        //                         ],
+                        //                       ),
+                        //                     ),
+                        //                   ),
+                        //                 ),
+                        //                 Expanded(
+                        //                   child: Align(
+                        //                       alignment: Alignment.topRight,
+                        //                       child: SizedBox(
+                        //                         child: LayoutBuilder(builder:
+                        //                             ((context, constraints) {
+                        //                           return Padding(
+                        //                             padding:
+                        //                                 const EdgeInsets.only(
+                        //                                     top: 20, right: 20),
+                        //                             child: BlocBuilder<CartBloc,
+                        //                                 CartState>(
+                        //                               builder:
+                        //                                   (context, state) {
+                        //                                 return GestureDetector(
+                        //                                   onTap: () => methods
+                        //                                       .buyButtonMethod(
+                        //                                           widget.user,
+                        //                                           context,
+                        //                                           widget
+                        //                                               .product),
+                        //                                   child: Container(
+                        //                                       decoration: BoxDecoration(
+                        //                                           color: widget
+                        //                                               .theme
+                        //                                               .oppAccent,
+                        //                                           borderRadius:
+                        //                                               BorderRadius.all(
+                        //                                                   Radius.circular(
+                        //                                                       60))),
+                        //                                       height: constraints
+                        //                                               .maxHeight *
+                        //                                           0.2,
+                        //                                       width: constraints
+                        //                                               .maxWidth *
+                        //                                           0.55,
+                        //                                       child: Center(
+                        //                                         child: Text(
+                        //                                           'Add to cart',
+                        //                                           style: GoogleFonts.poppins(
+                        //                                               fontSize:
+                        //                                                   10,
+                        //                                               color: widget
+                        //                                                   .theme
+                        //                                                   .mainAccent,
+                        //                                               fontWeight:
+                        //                                                   FontWeight
+                        //                                                       .w800),
+                        //                                         ),
+                        //                                       )),
+                        //                                 );
+                        //                               },
+                        //                             ),
+                        //                           );
+                        //                         })),
+                        //                       )),
+                        //                 ),
+                        //               ]),
+                        //         ),
+                        //       ));
+                        // })),
                       ],
                     ),
                   ),

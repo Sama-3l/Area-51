@@ -51,12 +51,15 @@ class _HomeState extends State<Home> {
               products: widget.products,
             )),
       ),
-      AspectRatio(
-        aspectRatio: 1.1,
-        child: HomeScreenLists(
-          theme: widget.theme,
-          title: "Recommendation",
-          products: widget.products,
+      Padding(
+        padding: EdgeInsets.only(bottom: 30),
+        child: AspectRatio(
+          aspectRatio: 1.1,
+          child: HomeScreenLists(
+            theme: widget.theme,
+            title: "Recommendation",
+            products: widget.products,
+          ),
         ),
       ),
     ]);
