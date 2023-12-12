@@ -4,6 +4,8 @@ import 'package:area_51/business_logic/blocs/catalogBloc/catalog_bloc.dart';
 import 'package:area_51/data/models/user.dart';
 import 'package:area_51/data/repositories/cart_Products.dart';
 import 'package:area_51/presentation/pages/productPage.dart';
+import 'package:area_51/presentation/widgets/searchWidgets/searchBar.dart';
+import 'package:area_51/presentation/widgets/searchWidgets/search_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -61,6 +63,7 @@ class CatalogListing extends StatelessWidget {
   LightMode theme;
   CartProducts cart;
   ProductList catalogProducts;
+  TextEditingController search = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -69,21 +72,41 @@ class CatalogListing extends StatelessWidget {
         body: CustomScrollView(
           key: PageStorageKey<String>('products'),
           slivers: [
+            SliverAppBar(
+                pinned: true,
+                backgroundColor: theme.mainAccent,
+                stretch: true,
+                toolbarHeight: 115,
+                title: Padding(
+                  padding: EdgeInsets.only(top: 10),
+                  child: AppSearchBar(
+                      text: "Enter",
+                      txt: search,
+                      error: false,
+                      theme: theme,
+                      fontSize: 20),
+                )),
             SliverToBoxAdapter(
-              child: Column(children: [
-                Container(
-                  height: 50,
-                  decoration: BoxDecoration(
-                      color: theme.oppAccent,
-                      borderRadius: BorderRadius.circular(50)),
-                ),
-                SizedBox(height: 20),
-                Container(color: Colors.black, height: 50),
+                child: FractionallySizedBox(
+              widthFactor: 0.9,
+              child: Row(children: [
+                Expanded(
+                    child: Padding(
+                  padding: EdgeInsets.only(right: 5),
+                  child: SearchButtons(
+                      buttonText: "Filter", filterButton: true, theme: theme),
+                )),
+                Expanded(
+                    child: Padding(
+                  padding: EdgeInsets.only(left: 5),
+                  child: SearchButtons(
+                      buttonText: "Sort", filterButton: false, theme: theme),
+                ))
               ]),
-            ),
+            )),
             SliverToBoxAdapter(
                 child: Padding(
-                    padding: EdgeInsets.only(left: 23, top: 50, bottom: 15),
+                    padding: EdgeInsets.only(left: 23, top: 25, bottom: 15),
                     child: AutoSizeText('Products',
                         maxFontSize: 24,
                         minFontSize: 17,
@@ -121,9 +144,6 @@ class CatalogListing extends StatelessWidget {
                             ));
                   }), childCount: catalogProducts.productList.length)),
             ),
-            SliverToBoxAdapter(
-                child:
-                    SizedBox(height: MediaQuery.of(context).size.width / 4.37))
           ],
         ));
   }

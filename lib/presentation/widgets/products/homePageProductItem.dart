@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, prefer_const_constructors
 
 import 'package:area_51/business_logic/blocs/catalogBloc/catalog_bloc.dart';
 import 'package:area_51/constants/colors.dart';
